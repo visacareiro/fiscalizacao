@@ -12,13 +12,13 @@
 
   // ── Credenciais do Projeto Firebase ────────────────────────────────────
   const firebaseConfig = {
-    apiKey: "AIzaSyB2JreLhyanBYRmsFzhRaQ--HTx5fl5B4E",
-    authDomain: "testevisa-e8360.firebaseapp.com",
-    projectId: "testevisa-e8360",
-    storageBucket: "testevisa-e8360.firebasestorage.app",
-    messagingSenderId: "454900323535",
-    appId: "1:454900323535:web:72bb31b2d4afe49d4093ba"
-  };
+   apiKey: "AIzaSyDR7J5Fzqkpe6s9GIZW7ibDQgkguHTt_2U",
+   authDomain: "visa-f4c86.firebaseapp.com",
+   projectId: "visa-f4c86",
+   storageBucket: "visa-f4c86.firebasestorage.app",
+   messagingSenderId: "794096930643",
+   appId: "1:794096930643:web:c3ae4d70fcd34c44d49ba6"
+ };
 
   // ── Inicializa o app evitando duplicidade ───────────────────────────────
   const _fbApp = firebase.apps.length

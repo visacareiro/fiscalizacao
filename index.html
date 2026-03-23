@@ -75,6 +75,21 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ─── BLOQUEAR SELEÇÃO DE TEXTO NÃO EDITÁVEL ─────────── */
+body, .sidebar, .topbar, table, .modal-header, .modal-body,
+.badge, .stat-card, .dash-card, .history-item, .nav-item,
+.table-header, .pagination, td, th, label, .filter-chip,
+.topbar-badge, .count-badge, .alert-strip, .agent-item,
+.config-card, .print-header, .print-body {
+  user-select: none;
+  -webkit-user-select: none;
+}
+input, textarea, select, [contenteditable] {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+#printContent { user-select: text; -webkit-user-select: text; }
+
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
@@ -1396,8 +1411,10 @@ input:checked + .slider::before { transform: translateX(18px); }
             <input class="form-input" type="date" id="estLicenca">
           </div>
           <div class="form-group">
-            <label>Órgão Licenciador *</label>
-            <input class="form-input" id="estOrgao" placeholder="Ex: VISA/CAREIRO">
+            <label>Órgão Licenciador</label>
+            <input class="form-input" id="estOrgao" value="VISA/CAREIRO" readonly
+              style="background:rgba(249,184,200,0.18);cursor:default;color:var(--rosa-dark);font-weight:600;border-color:var(--border-solid)"
+              title="Campo fixo — órgão licenciador padrão do município">
           </div>
         </div>
         <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px">
@@ -1452,19 +1469,18 @@ input:checked + .slider::before { transform: translateX(18px); }
   <div class="modal">
     <div class="modal-header">
       <div>
-        <h2 id="printModalTitle">🖨️ Imprimir</h2>
-        <div style="font-size:13px;color:var(--text-light);margin-top:4px" id="printModalSub">Pré-visualização do documento oficial</div>
+        <h2 id="printModalTitle">🖨️ Pré-visualização</h2>
+        <div style="font-size:13px;color:var(--text-light);margin-top:4px" id="printModalSub"></div>
       </div>
       <button class="modal-close" onclick="closeModal('printPreviewModal')">✕</button>
     </div>
     <div class="modal-body" style="padding:0">
-      <div style="padding:16px 24px;background:rgba(249,184,200,0.12);border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <div style="padding:14px 20px;background:rgba(249,184,200,0.12);border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:center">
         <button class="btn btn-primary" onclick="executarImpressao()">🖨️ Imprimir / Salvar PDF</button>
-        <button class="btn btn-ghost"   onclick="closeModal('printPreviewModal')">Fechar</button>
-        <span style="font-size:12px;color:var(--text-muted);margin-left:auto">Use Ctrl+P ou o botão acima para imprimir</span>
+        <button class="btn btn-ghost"   onclick="closeModal('printPreviewModal')">✕ Fechar</button>
       </div>
-      <div style="padding:24px;background:#f8f8f8;min-height:400px">
-        <div id="printContent" style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08)"></div>
+      <div style="padding:20px;background:#f4f4f4;min-height:300px">
+        <div id="printContent" style="background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.08)"></div>
       </div>
     </div>
   </div>
@@ -1584,7 +1600,9 @@ function insKey(id) { return String(id); }
 function getStatusFor(id) {
   const recs = getInspections()[insKey(id)];
   if (!recs || !recs.length) return 'pendente';
-  const last = recs[recs.length - 1];
+  // Pega a fiscalização com data mais recente
+  const sorted = [...recs].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  const last = sorted[0];
   // Validade de 4 meses: após esse período retorna automaticamente para Pendente
   if (last.date) {
     const expiry = new Date(last.date + 'T00:00:00');
@@ -1599,13 +1617,15 @@ function getStatusFor(id) {
 function getLastInspDate(id) {
   const recs = getInspections()[insKey(id)];
   if (!recs || !recs.length) return '';
-  return recs[recs.length - 1].date || '';
+  const sorted = [...recs].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  return sorted[0].date || '';
 }
 
 function getLastInspection(id) {
   const recs = getInspections()[insKey(id)];
   if (!recs || !recs.length) return null;
-  return recs[recs.length - 1];
+  const sorted = [...recs].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  return sorted[0];
 }
 
 // ═══════════════════════════════════════════════════════
@@ -2235,7 +2255,7 @@ function renderFiscRegistros() {
         <td><div class="td-nome">${esc(estab?.nome_fantasia||'ID '+id)}</div></td>
         <td><span class="badge badge-bairro">${esc(estab?.bairro||'—')}</span></td>
         <td>${formatDate(rec.date)}</td>
-        <td>👥 ${esc(rec.agent)}</td>
+        <td>👤 ${esc(rec.agent)}</td>
         <td>${statusHtml}</td>
         <td style="max-width:200px">${obsHtml}</td>
         <td><div class="td-actions">${actionsHtml}</div></td>
@@ -2542,12 +2562,12 @@ function imprimirEstabelecimentos() {
       </div>
       <div class="print-section-title">🏪 Estabelecimentos</div>
       <table>
-        <thead><tr><th style="width:28px">#</th><th>Nome Fantasia</th><th>Razão Social</th><th>Endereço</th><th>Localidade</th><th>Categoria</th><th>Tipo Atividade</th><th>CNAE</th><th>Risco</th><th>Órgão Lic.</th><th>Licenciamento</th><th>Status</th><th>Últ. Vistoria</th><th>Equipe Fiscal</th></tr></thead>
+        <thead><tr><th style="width:28px">#</th><th>Nome Fantasia</th><th>Razão Social</th><th>Endereço</th><th>Localidade</th><th>Categoria</th><th>Tipo Atividade</th><th>CNAE</th><th>Risco</th><th>Órgão Lic.</th><th>Licenciamento</th><th>Status</th><th>Últ. Vistoria</th><th>Fiscal Responsável</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
       <div class="print-footer">
         <div><div style="font-size:12px;color:#555;margin-bottom:32px">Responsável pela Emissão:</div><div class="sign-line">Chefe da Vigilância Sanitária Municipal</div></div>
-        <div><div style="font-size:12px;color:#555;margin-bottom:32px">Servidor Responsável:</div><div class="sign-line">Equipe / Fiscal Sanitário</div></div>
+        <div><div style="font-size:12px;color:#555;margin-bottom:32px">Fiscal Responsável:</div><div class="sign-line">${esc(_currentUser?.profile?.nome || 'Fiscal Sanitário')}</div></div>
       </div>
       <div style="margin-top:16px;padding:8px 12px;background:#f9f9f9;border-radius:6px;font-size:9px;color:#888;text-align:center">VISA Careiro — ${dateStr} às ${timeStr} — ${data.length} estabelecimentos</div>
     </div>`;
@@ -2558,11 +2578,16 @@ function imprimirEstabelecimentos() {
 function imprimirFiscalizacoes() {
   const ins = getInspections();
   const q   = (document.getElementById('searchFisc')?.value||'').toLowerCase().trim();
+  // Para impressão: apenas a fiscalização MAIS RECENTE de cada estabelecimento
   let rows  = [];
   Object.entries(ins).forEach(([key,recs]) => {
     const numId = Number(key);
     const estab = DADOS.find(d => d.id === numId)||null;
-    recs.forEach(rec => rows.push({estab,rec,id:numId}));
+    if (!recs || !recs.length) return;
+    // Ordena para pegar a mais recente
+    const sorted = [...recs].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+    const rec = sorted[0];
+    rows.push({estab, rec, id: numId});
   });
   if (fiscFilter) rows = rows.filter(r => r.rec.status === fiscFilter);
   if (q) rows = rows.filter(r => {
@@ -2618,12 +2643,12 @@ function imprimirFiscalizacoes() {
       </div>
       <div class="print-section-title">📋 Fiscalizações</div>
       <table>
-        <thead><tr><th style="width:32px">#</th><th>Estabelecimento</th><th>Localidade</th><th>Data</th><th>Equipe</th><th>Status</th><th>Observação</th></tr></thead>
+        <thead><tr><th style="width:32px">#</th><th>Estabelecimento</th><th>Localidade</th><th>Data</th><th>Fiscal Responsável</th><th>Status</th><th>Observação</th></tr></thead>
         <tbody>${tableRows}</tbody>
       </table>
       <div class="print-footer">
         <div><div style="font-size:12px;color:#555;margin-bottom:32px">Responsável pela Emissão:</div><div class="sign-line">Chefe da Vigilância Sanitária Municipal</div></div>
-        <div><div style="font-size:12px;color:#555;margin-bottom:32px">Servidor Responsável:</div><div class="sign-line">Equipe / Fiscal Sanitário</div></div>
+        <div><div style="font-size:12px;color:#555;margin-bottom:32px">Fiscal Responsável:</div><div class="sign-line">${esc(_currentUser?.profile?.nome || 'Fiscal Sanitário')}</div></div>
       </div>
       <div style="margin-top:24px;padding:12px;background:#f9f9f9;border-radius:8px;font-size:11px;color:#888;text-align:center">VISA Careiro — ${dateStr} às ${timeStr} — ${rows.length} registros</div>
     </div>`;
@@ -2643,10 +2668,20 @@ function executarImpressao() {
 </head>
 <body>
 <div>${content}</div>
-<script>window.onload=function(){window.print();}<\/script>
+<script>
+  window.onload = function() {
+    window.print();
+    window.onfocus = function() { window.close(); };
+  };
+<\/script>
 </body>
 </html>`);
   printWin.document.close();
+  // Fecha a pré-visualização automaticamente após clicar em imprimir
+  printWin.onload = function() {
+    printWin.focus();
+  };
+  closeModal('printPreviewModal');
 }
 
 // ═══════════════════════════════════════════════════════
@@ -3103,7 +3138,7 @@ function openEdit(id) {
   document.getElementById('estCnae').value      = r.cnae||'';
   document.getElementById('estRisco').value     = r.classe_risco||'';
   document.getElementById('estLicenca').value   = r.ultimo_licenciamento?.slice(0,10)||'';
-  document.getElementById('estOrgao').value     = r.orgao_licenciador||'';
+  document.getElementById('estOrgao').value     = 'VISA/CAREIRO'; // sempre fixo
   openModal('modalEstab');
 }
 
@@ -3125,7 +3160,7 @@ function saveEstab() {
   const cnae      = document.getElementById('estCnae').value.trim();
   const risco     = document.getElementById('estRisco').value;
   const licenca   = document.getElementById('estLicenca').value;
-  const orgao     = document.getElementById('estOrgao').value.trim();
+  const orgao     = 'VISA/CAREIRO'; // fixo — campo travado
 
   if (!nome)      { showToast('Informe o Nome Fantasia!','error'); return; }
   if (!razao)     { showToast('Informe a Razão Social!','error'); return; }
@@ -3136,7 +3171,7 @@ function saveEstab() {
   if (!cnae)      { showToast('Informe o CNAE!','error'); return; }
   if (!risco)     { showToast('Selecione a Classe de Risco!','error'); return; }
   if (!licenca)   { showToast('Informe o Último Licenciamento!','error'); return; }
-  if (!orgao)     { showToast('Informe o Órgão Licenciador!','error'); return; }
+  // orgao_licenciador é sempre VISA/CAREIRO (campo fixo)
 
   // Verificar nome duplicado (ignorando o próprio registro em caso de edição)
   const nomeUpper = nome.toUpperCase();
