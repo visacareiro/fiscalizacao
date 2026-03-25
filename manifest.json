@@ -2,55 +2,54 @@
   "name": "VISA Careiro — Cadastro Sanitário",
   "short_name": "VISA Careiro",
   "description": "Sistema de Cadastro Sanitário Municipal da Vigilância Sanitária de Careiro, AM",
-  "start_url": "./visa_mobile.html",
-  "scope": "./",
+
+  "start_url": "/fiscalizacao/mobile.html",
+  "scope": "/fiscalizacao/",
+
   "display": "standalone",
   "orientation": "portrait-primary",
+
   "background_color": "#f5e8ef",
   "theme_color": "#f48aab",
+
   "lang": "pt-BR",
   "categories": ["productivity", "government"],
+
   "icons": [
     {
-      "src": "imag01.jpeg",
+      "src": "/fiscalizacao/imag01.jpeg",
       "sizes": "192x192",
       "type": "image/jpeg",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
-      "src": "imag01.jpeg",
+      "src": "/fiscalizacao/imag01.jpeg",
       "sizes": "512x512",
       "type": "image/jpeg",
-      "purpose": "any"
-    },
-    {
-      "src": "imag01.jpeg",
-      "sizes": "192x192",
-      "type": "image/jpeg",
-      "purpose": "maskable"
-    },
-    {
-      "src": "imag01.jpeg",
-      "sizes": "512x512",
-      "type": "image/jpeg",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ],
+
   "shortcuts": [
     {
       "name": "Estabelecimentos",
       "short_name": "Estabs.",
       "description": "Ver lista de estabelecimentos",
-      "url": "./visa_mobile.html#estabelecimentos",
-      "icons": [{ "src": "imag01.jpeg", "sizes": "96x96" }]
+      "url": "/fiscalizacao/mobile.html#estabelecimentos",
+      "icons": [
+        { "src": "/fiscalizacao/imag01.jpeg", "sizes": "96x96" }
+      ]
     },
     {
       "name": "Fiscalizações",
       "short_name": "Fiscalizar",
       "description": "Registrar fiscalização",
-      "url": "./visa_mobile.html#fiscalizacao",
-      "icons": [{ "src": "imag01.jpeg", "sizes": "96x96" }]
+      "url": "/fiscalizacao/mobile.html#fiscalizacao",
+      "icons": [
+        { "src": "/fiscalizacao/imag01.jpeg", "sizes": "96x96" }
+      ]
     }
   ],
+
   "prefer_related_applications": false
 }
