@@ -12,7 +12,7 @@ const PRECACHE_ASSETS = [
   './index.html',
   './firebase-config.js',
   './manifest.json',
-  './imag01.jpeg'
+  './icon-192.png'
 ];
 
 // Hosts do Firebase — sempre network-first (dados em tempo real)
@@ -78,7 +78,7 @@ self.addEventListener('fetch', event => {
   }
 
   // Arquivo principal HTML → Network First com fallback de cache
-  if (url.pathname.endsWith('visa_mobile.html') || url.pathname === '/' || url.pathname.endsWith('/')) {
+  if (url.pathname.endsWith('index.html') || url.pathname === '/' || url.pathname.endsWith('/')) {
     event.respondWith(networkFirst(request, STATIC_CACHE, 3000));
     return;
   }
@@ -115,7 +115,7 @@ async function networkFirst(request, cacheName, timeout = 5000) {
     if (cached) return cached;
     // Fallback offline para o HTML principal
     if (request.destination === 'document') {
-      const fallback = await caches.match('./visa_mobile.html');
+      const fallback = await caches.match('./index.html');
       if (fallback) return fallback;
     }
     return new Response('Offline — sem conexão disponível.', {
@@ -164,8 +164,8 @@ self.addEventListener('push', event => {
   const data = event.data?.json() || {};
   const options = {
     body:    data.body    || 'Nova notificação VISA Careiro',
-    icon:    './imag01.jpeg',
-    badge:   './imag01.jpeg',
+    icon:    './icon-192.png',
+    badge:   './icon-192.png',
     vibrate: [200, 100, 200],
     data:    { url: data.url || './' },
     actions: [

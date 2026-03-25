@@ -11,9 +11,9 @@
 <meta name="description" content="Sistema de Cadastro Sanitário Municipal — Vigilância Sanitária de Careiro, AM">
 <title>VISA Careiro — Cadastro Sanitário</title>
 
-<link rel="icon"             type="image/jpeg" href="imag01.jpeg">
-<link rel="shortcut icon"    type="image/jpeg" href="imag01.jpeg">
-<link rel="apple-touch-icon"                   href="imag01.jpeg">
+<link rel="icon"             type="image/png"  href="icon-192.png">
+<link rel="shortcut icon"    type="image/png"  href="icon-192.png">
+<link rel="apple-touch-icon"                   href="icon-192.png">
 <link rel="manifest"                           href="manifest.json">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -440,7 +440,7 @@ button:focus:not(:focus-visible) { outline: none; }
   <div class="login-card">
     <div class="login-logo">
       <div class="logo-icon">
-        <img src="imag01.jpeg" alt="VISA" onerror="this.parentElement.textContent='🏥'">
+        <img src="icon-192.png" alt="VISA" onerror="this.parentElement.textContent='🏥'">
       </div>
       <h2>VISA Careiro</h2>
       <p>Cadastro Sanitário Municipal — Acesso Restrito</p>
@@ -468,7 +468,7 @@ button:focus:not(:focus-visible) { outline: none; }
 <!-- LOADING -->
 <div id="loadingOverlay" style="display:none;position:fixed;inset:0;background:rgba(245,232,239,.96);z-index:9000;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding-top:env(safe-area-inset-top,0px)">
   <div style="width:72px;height:72px;border-radius:22px;overflow:hidden;box-shadow:0 6px 24px rgba(244,138,171,0.35);background:var(--rosa-dark);display:flex;align-items:center;justify-content:center;font-size:36px">
-    <img src="imag01.jpeg" alt="VISA" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.parentElement.textContent='🏥'">
+    <img src="icon-192.png" alt="VISA" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.parentElement.textContent='🏥'">
   </div>
   <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700">VISA Careiro</div>
   <div style="font-size:13px;color:var(--text-muted)">Carregando dados da nuvem…</div>
@@ -1025,7 +1025,7 @@ function init() {
 (function(){
   if (!('serviceWorker' in navigator)) return;
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js', { scope: './' })
+    navigator.serviceWorker.register('./sw.js', { scope: '/fiscalizacao/mobile/' })
       .then(reg => {
         setInterval(() => reg.update(), 30 * 60 * 1000);
         reg.addEventListener('updatefound', () => {
