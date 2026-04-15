@@ -1599,9 +1599,11 @@ function saveEstab() {
   if (!risco) { showToast('Selecione a Classe de Risco!','error'); return; }
   if (!licenca) { showToast('Informe o Último Licenciamento!','error'); return; }
 
-  const nomeUpper = nome.toUpperCase();
-  const duplicado = DADOS.some(r => r.nome_fantasia?.toUpperCase() === nomeUpper && (currentEditId === null || r.id !== currentEditId));
-  if (duplicado) { showToast('Já existe um estabelecimento com este Nome Fantasia!','error'); return; }
+  // REMOVIDA A VERIFICAÇÃO DE NOME DUPLICADO
+  // A linha abaixo foi excluída:
+  // const nomeUpper = nome.toUpperCase();
+  // const duplicado = DADOS.some(r => r.nome_fantasia?.toUpperCase() === nomeUpper && (currentEditId === null || r.id !== currentEditId));
+  // if (duplicado) { showToast('Já existe um estabelecimento com este Nome Fantasia!','error'); return; }
 
   const payload = {
     nome_fantasia: nome,
