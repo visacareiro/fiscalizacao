@@ -2112,6 +2112,45 @@
         </div>
     </div>
 
+    <!-- MODAL DE ACEITAÇÃO DOS TERMOS (PRIMEIRO ACESSO) -->
+    <div class="overlay" id="modalTermos" style="z-index:10000">
+        <div class="modal" style="max-width:560px;text-align:center">
+            <div class="modal-header" style="background:var(--rosa-soft);display:block;text-align:center">
+                <div style="width:50px;height:50px;margin:0 auto 10px;border-radius:14px;background:var(--rosa-dark);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 16px rgba(244,138,171,0.4)">📄</div>
+                <h2 style="font-size:18px">Termos de Uso e Privacidade</h2>
+                <p style="font-size:12px;color:var(--text-muted);margin-top:4px">Você precisa aceitar os termos para continuar</p>
+            </div>
+            <div class="modal-body" style="text-align:left">
+                <p style="font-size:13px;color:var(--text-light);margin-bottom:16px">Antes de acessar o sistema <strong>VISA Careiro</strong>, leia atentamente os documentos abaixo. Ao clicar em <strong>&ldquo;Li e aceito&rdquo;</strong>, você declara que leu, compreendeu e concorda integralmente com ambos.</p>
+
+                <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+                    <a href="termo-de-uso.html" target="_blank" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,0.75);border:1.5px solid var(--border-solid);border-radius:var(--radius-sm);text-decoration:none;color:var(--text);transition:all .2s">
+                        <span style="font-size:22px">📜</span>
+                        <div style="flex:1">
+                            <div style="font-weight:700;font-size:14px">Termo de Uso</div>
+                            <div style="font-size:11px;color:var(--text-muted)">Regras de cessão, uso e desativação do sistema</div>
+                        </div>
+                        <span style="font-size:18px;color:var(--rosa-dark)">🔗</span>
+                    </a>
+                    <a href="politica-de-privacidade.html" target="_blank" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,0.75);border:1.5px solid var(--border-solid);border-radius:var(--radius-sm);text-decoration:none;color:var(--text);transition:all .2s">
+                        <span style="font-size:22px">🔒</span>
+                        <div style="flex:1">
+                            <div style="font-weight:700;font-size:14px">Política de Privacidade</div>
+                            <div style="font-size:11px;color:var(--text-muted)">Como seus dados e os de terceiros são tratados</div>
+                        </div>
+                        <span style="font-size:18px;color:var(--rosa-dark)">🔗</span>
+                    </a>
+                </div>
+
+                <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+                    <button class="btn btn-primary" onclick="aceitarTermos()" style="min-width:160px">✅ Li e aceito</button>
+                    <button class="btn btn-danger" onclick="rejeitarTermos()" style="min-width:160px">❌ Rejeito e sair</button>
+                </div>
+                <p style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:14px">Ao aceitar, você concorda com o <strong>Termo de Uso</strong> e a <strong>Política de Privacidade</strong> do sistema VISA Careiro.</p>
+            </div>
+        </div>
+    </div>
+
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
@@ -3234,11 +3273,48 @@
             } catch (err) { showToast('Erro ao alterar senha: ' + (err.message || err.code), 'error'); }
         }
 
+        // ═══════════════════════════════════════════════
+        // CONTROLE DE ACEITAÇÃO DOS TERMOS
+        // ═══════════════════════════════════════════════
+        function verificarTermos() {
+            const aceitos = sessionStorage.getItem('visa_terms_accepted');
+            if (_currentUser && !aceitos) {
+                openModal('modalTermos');
+                return false;
+            }
+            return true;
+        }
+
+        function aceitarTermos() {
+            try { sessionStorage.setItem('visa_terms_accepted', '1'); } catch (e) {}
+            closeModal('modalTermos');
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            carregarDadosRemotos();
+        }
+
+        function rejeitarTermos() {
+            try { sessionStorage.removeItem('visa_terms_accepted'); } catch (e) {}
+            closeModal('modalTermos');
+            doLogout();
+        }
+
         async function boot() {
             if (!_currentUser) { document.getElementById('loginOverlay').style.display = 'flex'; return; }
             document.getElementById('loginOverlay').style.display = 'none';
             const loadEl = document.getElementById('loadingOverlay');
+
+            const termosAceitos = sessionStorage.getItem('visa_terms_accepted');
+            if (!termosAceitos) {
+                openModal('modalTermos');
+                return;
+            }
+
             if (loadEl) loadEl.style.display = 'flex';
+            await carregarDadosRemotos();
+        }
+
+        async function carregarDadosRemotos() {
+            const loadEl = document.getElementById('loadingOverlay');
             try {
                 const snap = await _STATE_REF.get();
                 if (snap.exists) {
