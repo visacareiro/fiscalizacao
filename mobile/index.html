@@ -101,36 +101,6 @@
         .bn-item:active { opacity: .65; }
         .page { display: none; }
         .page.active { display: block; }
-        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 0 0 12px; }
-        .stat-card {
-            background: rgba(255,255,255,0.6); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-            border: 1.5px solid rgba(255,255,255,0.55); border-radius: var(--radius); padding: 12px; position: relative; overflow: hidden;
-            box-shadow: 0 4px 24px rgba(244,138,171,0.10), inset 0 1px 0 rgba(255,255,255,0.8);
-            transition: box-shadow .25s, transform .2s; -webkit-transform: translateZ(0); transform: translateZ(0);
-        }
-        .stat-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
-        .stat-card::before { content: ''; position: absolute; top: -24px; right: -24px; width: 90px; height: 90px; border-radius: 50%; opacity: .2; }
-        .stat-card.amarelo::before { background: var(--amarelo-dark); }
-        .stat-card.danger::before  { background: var(--danger); }
-        .stat-label { font-size: 10px; font-weight: 600; color: var(--text-muted); letter-spacing: .5px; text-transform: uppercase; }
-        .stat-value { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 900; margin: 6px 0 4px; }
-        .stat-card.amarelo .stat-value { color: var(--amarelo-dark); }
-        .stat-card.danger  .stat-value { color: var(--danger); }
-        .stat-sub  { font-size: 10px; color: var(--text-muted); }
-        .stat-icon { position: absolute; top: 10px; right: 10px; font-size: 22px; opacity: .55; }
-        .dash-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        .dash-card {
-            background: rgba(255,255,255,0.62); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-            border: 1.5px solid rgba(255,255,255,0.55); border-radius: var(--radius); padding: 18px;
-            box-shadow: 0 4px 28px rgba(244,138,171,0.10), inset 0 1px 0 rgba(255,255,255,0.8);
-            -webkit-transform: translateZ(0); transform: translateZ(0);
-        }
-        .dash-card h3 { font-family: 'Playfair Display', serif; font-size: 15px; margin-bottom: 14px; }
-        .bar-item { margin-bottom: 10px; }
-        .bar-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
-        .bar-label span:last-child { font-weight: 700; color: var(--rosa-dark); }
-        .bar-track { height: 7px; background: rgba(249,184,200,0.3); border-radius: 50px; overflow: hidden; }
-        .bar-fill  { height: 100%; border-radius: 50px; background: var(--rosa-dark); transition: width .5s ease; }
         .search-container {
             background: rgba(255,255,255,0.75); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
             border: 1.5px solid rgba(255,255,255,0.6); border-radius: 50px; display: flex; align-items: center;
@@ -173,7 +143,7 @@
             box-shadow: 0 2px 14px rgba(244,138,171,0.10); transition: box-shadow .2s; -webkit-tap-highlight-color: transparent;
             -webkit-transform: translateZ(0); transform: translateZ(0);
         }
-        .estab-card:active { transform: scale(0.984) !important; background: rgba(244,138,171,0.10) !important; }
+        .estab-card:active, .crono-item:active, .leg-item:active, .fisc-item:active { transform: scale(0.984) !important; background: rgba(244,138,171,0.10) !important; }
         .estab-card-nome  { font-weight: 700; font-size: 13px; color: var(--text); line-height: 1.3; }
         .estab-card-razao { font-size: 11px; color: var(--text-light); margin-top: 2px; }
         .estab-card-badges { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 7px; }
@@ -294,8 +264,7 @@
 </div>
 
 <nav class="bottom-nav">
-    <button class="bn-item active" id="bn-dashboard" onclick="navigate('dashboard')"><span class="bn-icon">📊</span><span class="bn-label">Dashboard</span></button>
-    <button class="bn-item" id="bn-estabelecimentos" onclick="navigate('estabelecimentos')"><span class="bn-icon">🏪</span><span class="bn-label">Estabs.</span></button>
+    <button class="bn-item active" id="bn-estabelecimentos" onclick="navigate('estabelecimentos')"><span class="bn-icon">🏪</span><span class="bn-label">Estabs.</span></button>
     <button class="bn-item" id="bn-cronograma" onclick="navigate('cronograma')"><span class="bn-icon">📅</span><span class="bn-label">Cronogr.</span></button>
     <button class="bn-item" id="bn-legislacao" onclick="navigate('legislacao')"><span class="bn-icon">📚</span><span class="bn-label">Legis.</span></button>
     <button class="bn-item" id="bn-fiscalizacao" onclick="navigate('fiscalizacao')"><span class="bn-icon">📋</span><span class="bn-label">Fiscaliz.</span></button>
@@ -303,24 +272,12 @@
 
 <main class="main">
     <div class="topbar">
-        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+        <div class="topbar-title" id="topbarTitle">Estabelecimentos</div>
         <button class="btn-topbar-logout" onclick="doLogout()">🚪 Sair</button>
     </div>
     <div class="content">
-        <!-- DASHBOARD -->
-        <div class="page active" id="page-dashboard">
-            <div class="stats-grid">
-                <div class="stat-card amarelo"><div class="stat-icon">📋</div><div class="stat-label">Fiscalizados</div><div class="stat-value" id="statFiscalizado">0</div><div class="stat-sub">Com vistoria registrada</div></div>
-                <div class="stat-card danger"><div class="stat-icon">⚠️</div><div class="stat-label">Pendentes</div><div class="stat-value" id="statPendente">0</div><div class="stat-sub">Sem vistoria registrada</div></div>
-            </div>
-            <div class="dash-grid">
-                <div class="dash-card"><h3>📍 Top 10 por Localidade</h3><div id="bairroChart"></div></div>
-                <div class="dash-card"><h3>🏷️ Top 10 por Categoria</h3><div id="catChart"></div></div>
-            </div>
-        </div>
-
         <!-- ESTABELECIMENTOS -->
-        <div class="page" id="page-estabelecimentos">
+        <div class="page active" id="page-estabelecimentos">
             <div class="search-container">
                 <span class="search-icon">🔍</span>
                 <input class="search-input" id="searchInput" type="text" placeholder="Buscar por nome, razão social..." oninput="onSearch()">
@@ -382,7 +339,7 @@
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-    let DADOS = [], _DADOS_ORIGINAL = [], currentPage = 'dashboard', currentEstabPage = 1;
+    let DADOS = [], _DADOS_ORIGINAL = [], currentPage = 'estabelecimentos', currentEstabPage = 1;
     const PAGE_SIZE = 20;
     let filters = { q: '', bairro: '', categoria: '' }, _currentUser = null;
     (function(){ try { const s = sessionStorage.getItem('visa_session'); if (s) _currentUser = JSON.parse(s); } catch(e) {} })();
@@ -391,6 +348,7 @@
         inspections: {}, custom: [], deleted: [], disabled: [], edited: {}, bairros: [],
         cronograma_data: [], legislacao_data: [], fiscalizacoes_data: []
     };
+    let _fiscFiltered = [];
 
     function _saveField(field, value) { _STATE_REF.set({ [field]: value }, { merge: true }).catch(e => console.error(e)); }
     function getInspections() { return _fbCache.inspections; }
@@ -432,10 +390,9 @@
         currentPage = pg;
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('page-'+pg)?.classList.add('active');
-        const titles = { dashboard:'Dashboard', estabelecimentos:'Estabelecimentos', cronograma:'Cronograma', legislacao:'Legislação', fiscalizacao:'Fiscalização' };
+        const titles = { estabelecimentos:'Estabelecimentos', cronograma:'Cronograma', legislacao:'Legislação', fiscalizacao:'Fiscalização' };
         document.getElementById('topbarTitle').textContent = titles[pg] || pg;
-        ['dashboard','estabelecimentos','cronograma','legislacao','fiscalizacao'].forEach(id => document.getElementById('bn-'+id)?.classList.toggle('active', id===pg));
-        if (pg==='dashboard') renderDashboard();
+        ['estabelecimentos','cronograma','legislacao','fiscalizacao'].forEach(id => document.getElementById('bn-'+id)?.classList.toggle('active', id===pg));
         if (pg==='estabelecimentos') renderTable();
         if (pg==='cronograma') renderCronograma();
         if (pg==='legislacao') renderLegislacao();
@@ -471,7 +428,7 @@
         } else {
             container.innerHTML = slice.map(r => {
                 const st = getStatusFor(r.id);
-                return `<div class="estab-card" onclick="openDetail(${r.id})">
+                return `<div class="estab-card" onclick="openEstabDetail(${r.id})">
                     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
                         <div style="flex:1;min-width:0"><div class="estab-card-nome">${esc(r.nome_fantasia)}</div><div class="estab-card-razao">${esc(r.razao_social)||'—'}</div></div>
                         ${riskBadge(r.classe_risco)}
@@ -499,7 +456,7 @@
     function getPageRange(cur,total){ if (total<=7) return Array.from({length:total},(_,i)=>i+1); if (cur<=4) return [1,2,3,4,5,'...',total]; if (cur>=total-3) return [1,'...',total-4,total-3,total-2,total-1,total]; return [1,'...',cur-1,cur,cur+1,'...',total]; }
     function goPage(p){ const tp=Math.max(1,Math.ceil(filteredData().length/PAGE_SIZE)); if (p<1||p>tp) return; currentEstabPage=p; renderTable(); window.scrollTo({top:0,behavior:'smooth'}); }
 
-    function openDetail(id) {
+    function openEstabDetail(id) {
         const r = DADOS.find(d => d.id === id); if (!r) return;
         const st = getStatusFor(id);
         document.getElementById('detailNome').textContent = r.nome_fantasia;
@@ -519,19 +476,39 @@
         openModal('modalDetail');
     }
 
-    function renderDashboard() {
-        const active = DADOS.filter(r => !isDisabled(r.id));
-        let fisc = 0; active.forEach(r => { if (getStatusFor(r.id)==='fiscalizado') fisc++; });
-        document.getElementById('statFiscalizado').textContent = fisc;
-        document.getElementById('statPendente').textContent = active.length - fisc;
-        const bairros = {}; active.forEach(r => { const k=r.bairro||'Não informado'; bairros[k]=(bairros[k]||0)+1; });
-        const bEntries = Object.entries(bairros).sort((a,b)=>b[1]-a[1]).slice(0,10);
-        const bMax = Math.max(1,...bEntries.map(([,c])=>c));
-        document.getElementById('bairroChart').innerHTML = bEntries.map(([n,c])=>`<div class="bar-item"><div class="bar-label"><span>${esc(n)}</span><span>${c}</span></div><div class="bar-track"><div class="bar-fill" style="width:${(c/bMax*100).toFixed(1)}%"></div></div></div>`).join('');
-        const cats = {}; active.forEach(r => { const cat=(r.categoria&&r.categoria.trim())?r.categoria.trim().toUpperCase():'NÃO INFORMADO'; cats[cat]=(cats[cat]||0)+1; });
-        const cEntries = Object.entries(cats).sort((a,b)=>b[1]-a[1]).slice(0,10);
-        const cMax = cEntries.length?cEntries[0][1]:1;
-        document.getElementById('catChart').innerHTML = cEntries.length?cEntries.map(([n,c])=>`<div class="bar-item"><div class="bar-label"><span style="font-size:11px">${esc(n)}</span><span>${c}</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/cMax*100)}%"></div></div></div>`).join(''):'<div style="color:var(--text-muted);font-size:13px;padding:8px">Nenhuma categoria.</div>';
+    function openCronoDetail(dia, mes, ano) {
+        const reg = getCronogramaData().find(r => r.mes===mes && r.ano===ano && r.dia===dia) || {};
+        const topicos = (reg.topicos && reg.topicos.length) ? reg.topicos : [];
+        document.getElementById('detailNome').textContent = 'Cronograma';
+        document.getElementById('detailBadges').innerHTML = `<span class="badge badge-bairro">📅 ${dia}/${mes}/${ano}</span>`;
+        const topicosHtml = topicos.length ? topicos.map(t => `<p style="margin-bottom:4px">• ${esc(t)}</p>`).join('') : '<p style="color:var(--text-muted)">—</p>';
+        document.getElementById('detailInfo').innerHTML = `
+            <div class="info-item full"><label>Tópicos do dia ${dia}</label>
+                <div style="margin-top:6px">${topicosHtml}</div>
+            </div>`;
+        openModal('modalDetail');
+    }
+
+    function openLegDetail(idx) {
+        const lista = getLegislacaoData(); const doc = lista[idx]; if (!doc) return;
+        document.getElementById('detailNome').textContent = doc.nome;
+        document.getElementById('detailBadges').innerHTML = doc.categoria ? `<span class="badge badge-cat">${esc(doc.categoria)}</span>` : '';
+        document.getElementById('detailInfo').innerHTML = `
+            <div class="info-item full"><label>Documento</label><p>${esc(doc.nome)}</p></div>
+            <div class="info-item"><label>Categoria</label><p>${esc(doc.categoria||'—')}</p></div>
+            <div class="info-item full"><a href="${esc(doc.link)}" target="_blank" style="color:var(--rosa-dark);font-weight:600;text-decoration:none;">🔗 Acessar documento original</a></div>`;
+        openModal('modalDetail');
+    }
+
+    function openFiscDetail(idx) {
+        const f = _fiscFiltered[idx]; if (!f) return;
+        document.getElementById('detailNome').textContent = f.estabelecimento;
+        document.getElementById('detailBadges').innerHTML = `<span class="badge badge-bairro">📅 ${formatDate(f.data)}</span>`;
+        document.getElementById('detailInfo').innerHTML = `
+            <div class="info-item full"><label>Estabelecimento</label><p>${esc(f.estabelecimento)}</p></div>
+            <div class="info-item"><label>Data</label><p>${formatDate(f.data)}</p></div>
+            <div class="info-item full"><label>Descrição</label><p>${esc(f.descricao||'—')}</p></div>`;
+        openModal('modalDetail');
     }
 
     function renderCronograma() {
@@ -543,12 +520,12 @@
         let html = '';
         for (let dia=1; dia<=diasNoMes; dia++) {
             const reg = mapa[dia] || {};
-            html += `<div class="crono-item" style="display:flex;gap:10px;align-items:flex-start">
+            const topicos = (reg.topicos && reg.topicos.length) ? reg.topicos : [];
+            const topicosHtml = topicos.length ? topicos.map(t => `<div style="font-size:12px;color:var(--text-light);margin-top:2px">• ${esc(t)}</div>`).join('') : '<div style="font-size:11px;color:var(--text-muted)">—</div>';
+            html += `<div class="crono-item" onclick="openCronoDetail(${dia}, ${mes}, ${ano})" style="cursor:pointer;display:flex;gap:10px;align-items:flex-start">
                 <div style="font-weight:700;font-size:14px;min-width:32px;color:var(--rosa-dark)">${dia}</div>
                 <div style="flex:1;min-width:0">
-                    <div style="font-weight:600;font-size:13px">${esc(reg.estabelecimento||'—')}</div>
-                    <div style="font-size:11px;color:var(--text-muted)">Fiscal: ${esc(reg.fiscal||'—')}</div>
-                    ${reg.descricao?`<div style="font-size:11px;color:var(--text-light);margin-top:4px">${esc(reg.descricao)}</div>`:''}
+                    ${topicosHtml}
                 </div>
             </div>`;
         }
@@ -557,10 +534,10 @@
 
     function renderLegislacao() {
         const lista = getLegislacaoData();
-        const html = lista.length ? lista.map(doc => `<div class="leg-item" onclick="window.open('${esc(doc.link)}','_blank')" style="cursor:pointer">
+        const html = lista.length ? lista.map((doc, i) => `<div class="leg-item" onclick="openLegDetail(${i})" style="cursor:pointer">
             <div style="font-weight:600;font-size:13px">${esc(doc.nome)}</div>
             ${doc.categoria?`<div style="font-size:11px;color:var(--text-muted);margin-top:2px">📁 ${esc(doc.categoria)}</div>`:''}
-            <div style="font-size:11px;color:var(--rosa-dark);margin-top:4px">🔗 Acessar documento</div>
+            <div style="font-size:11px;color:var(--rosa-dark);margin-top:4px">🔗 Ver detalhes</div>
         </div>`).join('') : '<div class="empty-state"><div class="icon">📚</div><h3>Nenhum documento</h3></div>';
         document.getElementById('legislacaoList').innerHTML = html;
     }
@@ -573,15 +550,13 @@
             filtrada = filtrada.filter(f => f.data && f.data.startsWith(mesFiltro));
         }
         filtrada.sort((a,b) => new Date(b.data) - new Date(a.data));
-        const html = filtrada.length ? filtrada.map(f => `<div class="fisc-item">
+        _fiscFiltered = filtrada;
+        const html = filtrada.length ? filtrada.map((f, i) => `<div class="fisc-item" onclick="openFiscDetail(${i})" style="cursor:pointer">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
                 <span style="font-weight:700;font-size:13px">🏪 ${esc(f.estabelecimento)}</span>
                 <span style="font-size:11px;color:var(--text-muted)">📅 ${formatDate(f.data)}</span>
             </div>
-            <div style="font-size:12px;color:var(--text-light);margin-top:4px">
-                <strong>Fiscal:</strong> ${esc(f.fiscal||'—')} &nbsp;|&nbsp; <strong>Ação:</strong> ${esc(f.acao||'—')}
-            </div>
-            ${f.descricao?`<div style="font-size:11px;color:var(--text-muted);margin-top:4px">${esc(f.descricao)}</div>`:''}
+            ${f.descricao?`<div style="font-size:12px;color:var(--text-light);margin-top:4px">${esc(f.descricao)}</div>`:''}
         </div>`).join('') : '<div class="empty-state"><div class="icon">📋</div><h3>Nenhuma ação registrada</h3></div>';
         document.getElementById('fiscalizacaoList').innerHTML = html;
     }
@@ -646,32 +621,28 @@
 
     function init() {
         rebuildDADOS();
-        // popular dropdowns
         const bairros = getBairros().slice().sort((a,b)=>a.localeCompare(b,'pt-BR'));
         const bOpts = bairros.map(b=>`<option value="${esc(b)}">${esc(b)}</option>`).join('');
         const fb = document.getElementById('filterBairro'); if (fb) { const cur=fb.value; fb.innerHTML='<option value="">Todas as localidades</option>'+bOpts; fb.value=cur; }
         const cats = [...new Set(DADOS.map(r=>r.categoria).filter(Boolean))].sort();
         const cOpts = cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
         const fc = document.getElementById('filterCategoria'); if (fc) { const cur=fc.value; fc.innerHTML='<option value="">Todas as categorias</option>'+cOpts; fc.value=cur; }
-        // anos cronograma
         const agora = new Date();
         const anoSel = document.getElementById('cronoAno'); if (anoSel) { for (let a=agora.getFullYear()-1;a<=agora.getFullYear()+2;a++) { const opt=document.createElement('option'); opt.value=a; opt.textContent=a; if (a===agora.getFullYear()) opt.selected=true; anoSel.appendChild(opt); } }
-        // mes atual cronograma
         const mesSel = document.getElementById('cronoMes'); if (mesSel) mesSel.value = agora.getMonth()+1;
-        // filtro mês fiscalização
         const fiscMes = document.getElementById('fiscMesFiltro');
         if (fiscMes) {
             const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
             let opts = '<option value="">Todos os meses</option>';
             const hoje = new Date();
             for (let i=0;i<12;i++) {
-                const mes = String(i+1).padStart(2,'0');
+                const mesStr = String(i+1).padStart(2,'0');
                 const label = `${meses[i]} ${hoje.getFullYear()}`;
-                opts += `<option value="${hoje.getFullYear()}-${mes}">${label}</option>`;
+                opts += `<option value="${hoje.getFullYear()}-${mesStr}">${label}</option>`;
             }
             fiscMes.innerHTML = opts;
         }
-        renderDashboard();
+        navigate('estabelecimentos');
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -687,5 +658,6 @@
 
     boot();
 </script>
+<script src="changelog.js"></script>
 </body>
 </html>
