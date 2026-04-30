@@ -1945,6 +1945,7 @@
                             </select>
                             <select class="form-select" id="cronogramaAno" onchange="renderCronograma()" style="width:auto;min-width:100px"></select>
                             <button class="btn btn-primary btn-sm" onclick="salvarCronograma()">💾 Salvar</button>
+                            <button class="btn btn-print btn-sm" onclick="imprimirCronograma()">🖨️ Imprimir</button>
                             <span style="font-size:11px;color:var(--text-muted)">Edite os campos e clique em Salvar</span>
                         </div>
                     </div>
@@ -1952,9 +1953,7 @@
                         <table>
                             <thead><tr>
                                 <th style="width:50px;text-align:center">Dia</th>
-                                <th style="width:18%">Fiscal Responsável</th>
-                                <th style="width:22%">Estabelecimento para Fiscalizar</th>
-                                <th style="width:auto">Descrição / Tópicos</th>
+                                <th style="width:auto">Tópicos</th>
                             </tr></thead>
                             <tbody id="cronogramaTableBody"></tbody>
                         </table>
@@ -2119,24 +2118,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group" style="margin-bottom:14px"><label>Estabelecimento *</label><select class="form-select" id="fiscEstabSelect"><option value="">Selecionar...</option></select></div>
-                <div class="form-row">
-                    <div class="form-group"><label>Data *</label><input class="form-input" type="date" id="fiscData"></div>
-                    <div class="form-group"><label>Fiscal Responsável *</label><input class="form-input" id="fiscFiscal" placeholder="Nome do fiscal"></div>
-                </div>
-                <div class="form-group" style="margin-bottom:14px"><label>Tipo de Ação *</label>
-                    <select class="form-select" id="fiscAcao">
-                        <option value="">Selecionar...</option>
-                        <option value="Inspeção Sanitária">Inspeção Sanitária</option>
-                        <option value="Vistoria de Rotina">Vistoria de Rotina</option>
-                        <option value="Coleta de Amostras">Coleta de Amostras</option>
-                        <option value="Notificação">Notificação</option>
-                        <option value="Auto de Infração">Auto de Infração</option>
-                        <option value="Interdição">Interdição</option>
-                        <option value="Reinspeção">Reinspeção</option>
-                        <option value="Orientação Técnica">Orientação Técnica</option>
-                        <option value="Outros">Outros</option>
-                    </select>
-                </div>
+                <div class="form-group" style="margin-bottom:14px"><label>Data *</label><input class="form-input" type="date" id="fiscData"></div>
                 <div class="form-group" style="margin-bottom:14px"><label>Descrição / Observações</label><textarea class="form-input" id="fiscDescricao" rows="3" placeholder="Descreva a ação realizada, achados, providências..."></textarea></div>
                 <input type="hidden" id="fiscEditId">
                 <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px"><button class="btn btn-ghost" onclick="closeModal('modalFiscalizacao')">Cancelar</button><button class="btn btn-primary" onclick="saveFiscalizacao()">💾 Salvar</button></div>
@@ -2663,6 +2645,9 @@
             ).join('') : '<div style="color:var(--text-muted);font-size:13px;padding:10px">Nenhuma categoria cadastrada.</div>';
         }
 
+        // ═══════════════════════════════════════════════
+        // IMPRIMIR ESTABELECIMENTOS
+        // ═══════════════════════════════════════════════
         function imprimirEstabelecimentos() {
             const data = filteredData();
             if (!data.length) { showToast('Nenhum estabelecimento para imprimir!', 'error'); return; }
@@ -2703,6 +2688,80 @@
 
         function _printStyles() {
             return `*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'DM Sans',sans-serif;color:#1a1a2e;background:#fff;padding:8px;font-size:8.5px;}.print-header{background:#f48aab;color:white;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-radius:7px 7px 0 0;}.print-header h1{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;line-height:1.2;}.print-header>div:first-child>div:first-child{font-size:8px;opacity:.85;letter-spacing:.6px;text-transform:uppercase;}.print-header>div:first-child>div:last-child{font-size:9px;opacity:.9;margin-top:1px;}.print-meta{font-size:8.5px;opacity:.9;text-align:right;white-space:nowrap;}.print-body{padding:10px 14px;}.print-section-title{font-family:'Playfair Display',serif;font-size:10.5px;border-bottom:1.5px solid #f48aab;padding-bottom:3px;margin:9px 0 6px;color:#f48aab;}.print-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;}.print-stat{background:#fde8ee;border:1px solid #f5c6d4;border-radius:5px;padding:6px 5px;text-align:center;}.pv{font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:#f48aab;line-height:1;}.pl{font-size:7.5px;color:#b08090;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}table{width:100%;border-collapse:collapse;font-size:8px;}thead tr{background:#f48aab;color:white;}th{padding:4px 5px;text-align:left;font-weight:700;font-size:7.5px;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;}td{padding:3.5px 5px;border-bottom:1px solid #fae8f0;vertical-align:middle;font-size:8px;}tr:nth-child(even) td{background:#fff5f8;}.print-footer{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1.5px solid #eee;padding-top:12px;page-break-inside:avoid;break-inside:avoid;}.sign-line{border-top:1px solid #333;margin-top:26px;padding-top:4px;font-size:8.5px;color:#555;text-align:center;}@media print{body{padding:0;}@page{size:landscape;margin:5mm;}.print-footer{page-break-inside:avoid;break-inside:avoid;}}`;
+        }
+
+        // ═══════════════════════════════════════════════
+        // IMPRIMIR CRONOGRAMA
+        // ═══════════════════════════════════════════════
+        function imprimirCronograma() {
+            const mesSel = document.getElementById('cronogramaMes');
+            const anoSel = document.getElementById('cronogramaAno');
+            const mes = parseInt(mesSel.value);
+            const ano = parseInt(anoSel.value);
+            const nomeMes = mesSel.options[mesSel.selectedIndex].text;
+
+            // Coleta os dados da tabela (tópicos)
+            const inputs = document.querySelectorAll('#cronogramaTableBody .cronograma-topico');
+            const mapaPorDia = {};
+            inputs.forEach(inp => {
+                const dia = parseInt(inp.dataset.dia);
+                const valor = inp.value.trim();
+                if (!mapaPorDia[dia]) mapaPorDia[dia] = { dia, topicos: [] };
+                if (valor) mapaPorDia[dia].topicos.push(valor);
+            });
+
+            const registros = Object.values(mapaPorDia).filter(r => r.topicos.length > 0);
+            registros.sort((a, b) => a.dia - b.dia);
+
+            if (registros.length === 0) {
+                showToast('Nenhum registro no cronograma para imprimir!', 'error');
+                return;
+            }
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('pt-BR');
+            const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+            const rows = registros.map(r => `
+                <tr>
+                    <td style="text-align:center;font-weight:600">${r.dia}</td>
+                    <td>${r.topicos.map(t => `• ${esc(t)}`).join('<br>')}</td>
+                </tr>
+            `).join('');
+
+            const html = `
+                <div class="print-header">
+                    <div>
+                        <div style="font-size:12px;opacity:.85;margin-bottom:4px;letter-spacing:1px;text-transform:uppercase">Prefeitura Municipal de Careiro — AM</div>
+                        <h1>VISA Careiro</h1>
+                        <div style="font-size:13px;opacity:.9;margin-top:4px">Vigilância Sanitária — Cronograma de Fiscalização</div>
+                    </div>
+                    <div class="print-meta"><div><strong>Data:</strong> ${dateStr} &nbsp;|&nbsp; <strong>Hora:</strong> ${timeStr}</div></div>
+                </div>
+                <div class="print-body">
+                    <div style="background:#f9f9f9;border:1px solid #eee;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:12px;color:#555">
+                        <strong style="color:#333">Período:</strong> ${nomeMes} de ${ano}
+                    </div>
+                    <div class="print-section-title">📊 Resumo</div>
+                    <div class="print-summary">
+                        <div class="print-stat"><div class="pv">${registros.length}</div><div class="pl">Dias programados</div></div>
+                    </div>
+                    <div class="print-section-title">📅 Programação Diária</div>
+                    <table>
+                        <thead><tr><th style="width:40px">Dia</th><th>Tópicos</th></tr></thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                    <div class="print-footer">
+                        <div><div style="font-size:12px;color:#555;margin-bottom:32px">Responsável pela Programação:</div><div class="sign-line">Chefe da Vigilância Sanitária Municipal</div></div>
+                        <div><div style="font-size:12px;color:#555;margin-bottom:32px">Fiscal Responsável:</div><div class="sign-line">${esc(_currentUser?.profile?.nome || 'Fiscal Sanitário')}</div></div>
+                    </div>
+                    <div style="margin-top:16px;padding:8px 12px;background:#f9f9f9;border-radius:6px;font-size:9px;color:#888;text-align:center">VISA Careiro — ${dateStr} às ${timeStr} — ${nomeMes}/${ano}</div>
+                </div>`;
+
+            document.getElementById('printModalTitle').textContent = '🖨️ Cronograma Mensal';
+            document.getElementById('printModalSub').textContent = nomeMes + ' de ' + ano;
+            document.getElementById('printContent').innerHTML = html;
+            openModal('printPreviewModal');
         }
 
         function renderConfig() { renderBairroTags(); updateConfigStats(); }
@@ -3130,21 +3189,52 @@
             const mapa = {};
             registrosDoMes.forEach(r => { mapa[r.dia] = r; });
 
-            const estabelecimentos = DADOS.filter(r => !isDisabled(r.id)).map(r => r.nome_fantasia).sort();
             const tbody = document.getElementById('cronogramaTableBody');
             let html = '';
             for (let dia = 1; dia <= totalDias; dia++) {
-                const reg = mapa[dia] || { fiscal: '', estabelecimento: '', descricao: '' };
-                const dataAttr = `data-dia="${dia}"`;
+                const reg = mapa[dia] || { topicos: [] };
+                const topicos = (reg.topicos && reg.topicos.length) ? [...reg.topicos] : [''];
+                let topicosHtml = '';
+                topicos.forEach((topico, idx) => {
+                    const isLast = idx === topicos.length - 1;
+                    topicosHtml += `<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center">
+                        <input class="cronograma-editable cronograma-topico" type="text" placeholder="Descreva o tópico..." value="${esc(topico)}" data-dia="${dia}" data-index="${idx}">
+                        ${isLast ? `<button type="button" class="btn btn-sm btn-ghost cronograma-add-topico" data-dia="${dia}" style="padding:2px 8px;font-size:14px;line-height:1" onclick="addTopico(this, ${dia})">+</button>` : `<button type="button" class="btn btn-sm btn-ghost cronograma-remove-topico" data-dia="${dia}" data-index="${idx}" style="padding:2px 8px;font-size:14px;line-height:1;color:var(--danger)" onclick="removeTopico(this, ${dia}, ${idx})">×</button>`}
+                    </div>`;
+                });
                 html += `<tr>
                     <td class="cronograma-dia">${dia}</td>
-                    <td><input class="cronograma-editable" type="text" placeholder="Nome do fiscal..." value="${esc(reg.fiscal||'')}" ${dataAttr} data-field="fiscal"></td>
-                    <td><input class="cronograma-editable" list="cronogramaEstabList" placeholder="Estabelecimento..." value="${esc(reg.estabelecimento||'')}" ${dataAttr} data-field="estabelecimento"></td>
-                    <td><textarea class="cronograma-editable" placeholder="Descreva as atividades, separadas por tópicos (use - ou *)..." ${dataAttr} data-field="descricao">${esc(reg.descricao||'')}</textarea></td>
+                    <td class="cronograma-topicos-cell" data-dia="${dia}">
+                        ${topicosHtml}
+                    </td>
                 </tr>`;
             }
-            html += `<datalist id="cronogramaEstabList">${estabelecimentos.map(e=>`<option value="${esc(e)}">`).join('')}</datalist>`;
             tbody.innerHTML = html;
+        }
+
+        function addTopico(btn, dia) {
+            const cell = btn.closest('.cronograma-topicos-cell');
+            const topicosDivs = cell.querySelectorAll('div[style*="display:flex"]');
+            // Transforma o botão + do último em ×
+            const lastDiv = topicosDivs[topicosDivs.length - 1];
+            const addBtn = lastDiv.querySelector('.cronograma-add-topico');
+            if (addBtn) {
+                addBtn.outerHTML = `<button type="button" class="btn btn-sm btn-ghost cronograma-remove-topico" data-dia="${dia}" data-index="${topicosDivs.length-1}" style="padding:2px 8px;font-size:14px;line-height:1;color:var(--danger)" onclick="removeTopico(this, ${dia}, ${topicosDivs.length-1})">×</button>`;
+            }
+            // Adiciona nova linha
+            const newIdx = topicosDivs.length;
+            const newDiv = document.createElement('div');
+            newDiv.style.cssText = 'display:flex;gap:8px;margin-bottom:4px;align-items:center';
+            newDiv.innerHTML = `<input class="cronograma-editable cronograma-topico" type="text" placeholder="Descreva o tópico..." value="" data-dia="${dia}" data-index="${newIdx}">
+                <button type="button" class="btn btn-sm btn-ghost cronograma-add-topico" data-dia="${dia}" style="padding:2px 8px;font-size:14px;line-height:1" onclick="addTopico(this, ${dia})">+</button>`;
+            cell.appendChild(newDiv);
+            newDiv.querySelector('input').focus();
+        }
+
+        function removeTopico(btn, dia, idx) {
+            const div = btn.closest('div');
+            div.remove();
+            // Não precisa reindexar, no salvamento coletamos todos os inputs
         }
 
         function salvarCronograma() {
@@ -3152,17 +3242,17 @@
             const anoSel = document.getElementById('cronogramaAno');
             const mes = parseInt(mesSel.value);
             const ano = parseInt(anoSel.value);
-            const inputs = document.querySelectorAll('#cronogramaTableBody .cronograma-editable, #cronogramaTableBody textarea.cronograma-editable');
-            const mapaPorDia = {};
 
-            inputs.forEach(inp => {
+            const topicosInputs = document.querySelectorAll('#cronogramaTableBody .cronograma-topico');
+            const mapaPorDia = {};
+            topicosInputs.forEach(inp => {
                 const dia = parseInt(inp.dataset.dia);
-                const field = inp.dataset.field;
-                if (!mapaPorDia[dia]) mapaPorDia[dia] = { dia, mes, ano, fiscal: '', estabelecimento: '', descricao: '' };
-                mapaPorDia[dia][field] = inp.value.trim();
+                const valor = inp.value.trim();
+                if (!mapaPorDia[dia]) mapaPorDia[dia] = { dia, mes, ano, topicos: [] };
+                if (valor) mapaPorDia[dia].topicos.push(valor);
             });
 
-            const novosRegistros = Object.values(mapaPorDia).filter(r => r.fiscal || r.estabelecimento || r.descricao);
+            const novosRegistros = Object.values(mapaPorDia).filter(r => r.topicos.length > 0);
             const cronograma = getCronogramaData().filter(r => !(r.mes === mes && r.ano === ano));
             const merged = [...cronograma, ...novosRegistros];
             saveCronogramaData(merged);
@@ -3271,10 +3361,9 @@
                 filtrada = filtrada.filter(f => f.data === filtroData.value);
             }
             if (filtroMes && filtroMes.value) {
-                // filtroMes.value tem formato "YYYY-MM"
                 const [anoF, mesF] = filtroMes.value.split('-');
                 filtrada = filtrada.filter(f => {
-                    const d = f.data; // formato "YYYY-MM-DD"
+                    const d = f.data;
                     if (!d) return false;
                     const partes = d.split('-');
                     return partes[0] === anoF && partes[1] === mesF;
@@ -3294,10 +3383,9 @@
                     <div class="fisc-item-header">
                         <span class="fisc-estab">🏪 ${esc(f.estabelecimento)}</span>
                         <span class="fisc-data">📅 ${formatDate(f.data)}</span>
-                        <span class="badge badge-cat">${esc(f.acao||'Ação')}</span>
                     </div>
                     <div class="fisc-item-body">
-                        <strong>Fiscal:</strong> ${esc(f.fiscal||'—')} &nbsp;|&nbsp; ${esc(f.descricao||'Sem descrição adicional.')}
+                        ${esc(f.descricao||'Sem descrição adicional.')}
                     </div>
                     <div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end">
                         <button class="btn btn-ghost btn-sm" onclick="openEditFiscalizacao(${idxOriginal})">✏️ Editar</button>
@@ -3338,9 +3426,7 @@
                     <td style="text-align:center">${i+1}</td>
                     <td>${esc(f.estabelecimento)}</td>
                     <td>${formatDate(f.data)}</td>
-                    <td>${esc(f.fiscal||'—')}</td>
-                    <td>${esc(f.acao||'—')}</td>
-                    <td style="font-size:10px;color:#555;max-width:200px">${esc(f.descricao||'—')}</td>
+                    <td style="font-size:10px;color:#555">${esc(f.descricao||'—')}</td>
                 </tr>
             `).join('');
 
@@ -3369,7 +3455,7 @@
                     </div>
                     <div class="print-section-title">📋 Ações de Fiscalização</div>
                     <table>
-                        <thead><tr><th style="width:30px">#</th><th>Estabelecimento</th><th>Data</th><th>Fiscal</th><th>Ação</th><th>Descrição</th></tr></thead>
+                        <thead><tr><th style="width:30px">#</th><th>Estabelecimento</th><th>Data</th><th>Descrição</th></tr></thead>
                         <tbody>${rows}</tbody>
                     </table>
                     <div class="print-footer">
@@ -3389,8 +3475,6 @@
             document.getElementById('fiscModalTitle').textContent = '＋ Nova Ação de Fiscalização';
             document.getElementById('fiscEstabSelect').value = '';
             document.getElementById('fiscData').value = '';
-            document.getElementById('fiscFiscal').value = '';
-            document.getElementById('fiscAcao').value = '';
             document.getElementById('fiscDescricao').value = '';
             document.getElementById('fiscEditId').value = '';
             const sel = document.getElementById('fiscEstabSelect');
@@ -3406,8 +3490,6 @@
             document.getElementById('fiscModalTitle').textContent = '✏️ Editar Ação de Fiscalização';
             document.getElementById('fiscEstabSelect').value = f.estabelecimento || '';
             document.getElementById('fiscData').value = f.data || '';
-            document.getElementById('fiscFiscal').value = f.fiscal || '';
-            document.getElementById('fiscAcao').value = f.acao || '';
             document.getElementById('fiscDescricao').value = f.descricao || '';
             document.getElementById('fiscEditId').value = index;
             const sel = document.getElementById('fiscEstabSelect');
@@ -3420,17 +3502,13 @@
         function saveFiscalizacao() {
             const estabelecimento = document.getElementById('fiscEstabSelect').value;
             const data = document.getElementById('fiscData').value;
-            const fiscal = document.getElementById('fiscFiscal').value.trim();
-            const acao = document.getElementById('fiscAcao').value;
             const descricao = document.getElementById('fiscDescricao').value.trim();
             const editId = document.getElementById('fiscEditId').value;
 
             if (!estabelecimento) { showToast('Selecione o estabelecimento!', 'error'); return; }
             if (!data) { showToast('Informe a data!', 'error'); return; }
-            if (!fiscal) { showToast('Informe o fiscal responsável!', 'error'); return; }
-            if (!acao) { showToast('Selecione o tipo de ação!', 'error'); return; }
 
-            const entry = { estabelecimento, data, fiscal, acao, descricao };
+            const entry = { estabelecimento, data, descricao };
             const lista = getFiscalizacoesData();
             if (editId !== '') {
                 const idx = parseInt(editId);
@@ -3626,5 +3704,6 @@
         });
         boot();
     </script>
+    <script src="changelog.js"></script>
 </body>
 </html>
