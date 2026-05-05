@@ -267,7 +267,6 @@
     <button class="bn-item active" id="bn-estabelecimentos" onclick="navigate('estabelecimentos')"><span class="bn-icon">🏪</span><span class="bn-label">Estabs.</span></button>
     <button class="bn-item" id="bn-cronograma" onclick="navigate('cronograma')"><span class="bn-icon">📅</span><span class="bn-label">Cronogr.</span></button>
     <button class="bn-item" id="bn-legislacao" onclick="navigate('legislacao')"><span class="bn-icon">📚</span><span class="bn-label">Legis.</span></button>
-    <button class="bn-item" id="bn-fiscalizacao" onclick="navigate('fiscalizacao')"><span class="bn-icon">📋</span><span class="bn-label">Fiscaliz.</span></button>
 </nav>
 
 <main class="main">
@@ -313,16 +312,6 @@
             <div class="table-section"><div class="table-header"><h2>📚 Legislação Sanitária</h2></div>
             <div class="card-list" id="legislacaoList"></div></div>
         </div>
-
-        <!-- FISCALIZAÇÃO -->
-        <div class="page" id="page-fiscalizacao">
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-                <select class="filter-select" id="fiscMesFiltro" onchange="renderFiscalizacoes()" style="min-width:140px">
-                    <option value="">Todos os meses</option>
-                </select>
-            </div>
-            <div class="card-list" id="fiscalizacaoList"></div>
-        </div>
     </div>
 </main>
 
@@ -348,7 +337,6 @@
         inspections: {}, custom: [], deleted: [], disabled: [], edited: {}, bairros: [],
         cronograma_data: [], legislacao_data: [], fiscalizacoes_data: []
     };
-    let _fiscFiltered = [];
 
     function _saveField(field, value) { _STATE_REF.set({ [field]: value }, { merge: true }).catch(e => console.error(e)); }
     function getInspections() { return _fbCache.inspections; }
@@ -390,13 +378,12 @@
         currentPage = pg;
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('page-'+pg)?.classList.add('active');
-        const titles = { estabelecimentos:'Estabelecimentos', cronograma:'Cronograma', legislacao:'Legislação', fiscalizacao:'Fiscalização' };
+        const titles = { estabelecimentos:'Estabelecimentos', cronograma:'Cronograma', legislacao:'Legislação' };
         document.getElementById('topbarTitle').textContent = titles[pg] || pg;
-        ['estabelecimentos','cronograma','legislacao','fiscalizacao'].forEach(id => document.getElementById('bn-'+id)?.classList.toggle('active', id===pg));
+        ['estabelecimentos','cronograma','legislacao'].forEach(id => document.getElementById('bn-'+id)?.classList.toggle('active', id===pg));
         if (pg==='estabelecimentos') renderTable();
         if (pg==='cronograma') renderCronograma();
         if (pg==='legislacao') renderLegislacao();
-        if (pg==='fiscalizacao') renderFiscalizacoes();
     }
 
     function filteredData() {
@@ -464,6 +451,14 @@
             (r.bairro?'<span class="badge badge-bairro">'+esc(r.bairro)+'</span>':'') +
             (r.categoria?'<span class="badge badge-cat">'+esc(r.categoria)+'</span>':'') +
             riskBadge(r.classe_risco) + statusBadge(st) + licenciamentoBadge(r.licenciamento);
+        // Inclui campos de fiscalização se disponíveis
+        let fiscHtml = '';
+        if (r.ultimo_fiscalização) {
+            fiscHtml += `<div class="info-item"><label>Data da Fiscalização</label><p>${formatDate(r.ultimo_fiscalização)}</p></div>`;
+        }
+        if (r.fiscalizacao_descricao && r.fiscalizacao_descricao.trim()) {
+            fiscHtml += `<div class="info-item full"><label>Descrição da Fiscalização</label><p style="white-space:pre-wrap">${esc(r.fiscalizacao_descricao)}</p></div>`;
+        }
         document.getElementById('detailInfo').innerHTML = `
             <div class="info-item"><label>Razão Social</label><p>${esc(r.razao_social)||'—'}</p></div>
             <div class="info-item"><label>CPF/CNPJ</label><p>${esc(r.cpf_cnpj)||'—'}</p></div>
@@ -472,7 +467,8 @@
             <div class="info-item"><label>Tipo de Atividade</label><p>${esc(r.tipo_atividade)||'—'}</p></div>
             <div class="info-item"><label>Último Licenciamento</label><p>${formatDate(r.ultimo_licenciamento)}</p></div>
             <div class="info-item"><label>Órgão Licenciador</label><p>${esc(r.orgao_licenciador)||'—'}</p></div>
-            <div class="info-item"><label>CNAE</label><p>${esc(r.cnae)||'—'}</p></div>`;
+            <div class="info-item"><label>CNAE</label><p>${esc(r.cnae)||'—'}</p></div>
+            ${fiscHtml}`;
         openModal('modalDetail');
     }
 
@@ -497,17 +493,6 @@
             <div class="info-item full"><label>Documento</label><p>${esc(doc.nome)}</p></div>
             <div class="info-item"><label>Categoria</label><p>${esc(doc.categoria||'—')}</p></div>
             <div class="info-item full"><a href="${esc(doc.link)}" target="_blank" style="color:var(--rosa-dark);font-weight:600;text-decoration:none;">🔗 Acessar documento original</a></div>`;
-        openModal('modalDetail');
-    }
-
-    function openFiscDetail(idx) {
-        const r = _fiscFiltered[idx]; if (!r) return;
-        document.getElementById('detailNome').textContent = r.nome_fantasia;
-        document.getElementById('detailBadges').innerHTML = `<span class="badge badge-bairro">📅 ${formatDate(r.ultimo_fiscalização)}</span>`;
-        document.getElementById('detailInfo').innerHTML = `
-            <div class="info-item full"><label>Estabelecimento</label><p>${esc(r.nome_fantasia)}</p></div>
-            <div class="info-item"><label>Data da Fiscalização</label><p>${formatDate(r.ultimo_fiscalização)}</p></div>
-            <div class="info-item full"><label>Descrição da Fiscalização</label><p style="white-space:pre-wrap">${esc(r.fiscalizacao_descricao||'—')}</p></div>`;
         openModal('modalDetail');
     }
 
@@ -540,25 +525,6 @@
             <div style="font-size:11px;color:var(--rosa-dark);margin-top:4px">🔗 Ver detalhes</div>
         </div>`).join('') : '<div class="empty-state"><div class="icon">📚</div><h3>Nenhum documento</h3></div>';
         document.getElementById('legislacaoList').innerHTML = html;
-    }
-
-    function renderFiscalizacoes() {
-        const lista = DADOS.filter(r => !isDisabled(r.id) && r.fiscalizacao_descricao && r.fiscalizacao_descricao.trim() !== '');
-        const mesFiltro = document.getElementById('fiscMesFiltro')?.value;
-        let filtrada = [...lista];
-        if (mesFiltro) {
-            filtrada = filtrada.filter(r => r.ultimo_fiscalização && r.ultimo_fiscalização.startsWith(mesFiltro));
-        }
-        filtrada.sort((a,b) => new Date(b.ultimo_fiscalização) - new Date(a.ultimo_fiscalização));
-        _fiscFiltered = filtrada;
-        const html = filtrada.length ? filtrada.map((r, i) => `<div class="fisc-item" onclick="openFiscDetail(${i})" style="cursor:pointer">
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
-                <span style="font-weight:700;font-size:13px">🏪 ${esc(r.nome_fantasia)}</span>
-                <span style="font-size:11px;color:var(--text-muted)">📅 ${formatDate(r.ultimo_fiscalização)}</span>
-            </div>
-            ${r.fiscalizacao_descricao?`<div style="font-size:12px;color:var(--text-light);margin-top:4px;white-space:pre-wrap">${esc(r.fiscalizacao_descricao)}</div>`:''}
-        </div>`).join('') : '<div class="empty-state"><div class="icon">📋</div><h3>Nenhuma descrição registrada</h3></div>';
-        document.getElementById('fiscalizacaoList').innerHTML = html;
     }
 
     function openModal(id) { document.getElementById(id)?.classList.add('open'); }
@@ -630,18 +596,6 @@
         const agora = new Date();
         const anoSel = document.getElementById('cronoAno'); if (anoSel) { for (let a=agora.getFullYear()-1;a<=agora.getFullYear()+2;a++) { const opt=document.createElement('option'); opt.value=a; opt.textContent=a; if (a===agora.getFullYear()) opt.selected=true; anoSel.appendChild(opt); } }
         const mesSel = document.getElementById('cronoMes'); if (mesSel) mesSel.value = agora.getMonth()+1;
-        const fiscMes = document.getElementById('fiscMesFiltro');
-        if (fiscMes) {
-            const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-            let opts = '<option value="">Todos os meses</option>';
-            const hoje = new Date();
-            for (let i=0;i<12;i++) {
-                const mesStr = String(i+1).padStart(2,'0');
-                const label = `${meses[i]} ${hoje.getFullYear()}`;
-                opts += `<option value="${hoje.getFullYear()}-${mesStr}">${label}</option>`;
-            }
-            fiscMes.innerHTML = opts;
-        }
         navigate('estabelecimentos');
     }
 
