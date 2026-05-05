@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=1280">
     <title>VISA Careiro — Cadastro Sanitário</title>
 
-    <!-- Ícone personalizado -->
     <link rel="icon" type="image/jpeg" href="imag01.jpeg">
     <link rel="shortcut icon" type="image/jpeg" href="imag01.jpeg">
     <link rel="apple-touch-icon" href="imag01.jpeg">
@@ -53,10 +52,14 @@
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
-    <script src="firebase-config.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js">
+    </script>
+    <script src="firebase-config.js">
+    </script>
     <style>
         :root {
             --rosa: #f9b8c8;
@@ -142,7 +145,6 @@
             overflow-x: auto;
         }
 
-        /* Sidebar */
         .sidebar {
             position: fixed;
             top: 0;
@@ -247,7 +249,6 @@
             color: var(--text-muted);
         }
 
-        /* Main */
         .main {
             margin-left: 260px;
             min-height: 100vh;
@@ -304,7 +305,6 @@
             padding: 28px;
         }
 
-        /* Search bar */
         .search-container {
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: var(--glass-blur);
@@ -347,7 +347,6 @@
             display: none;
         }
 
-        /* Filters */
         .filters-row {
             display: flex;
             gap: 10px;
@@ -400,7 +399,6 @@
             border-color: var(--rosa-dark);
         }
 
-        /* Stats cards - now 4 columns */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -485,7 +483,6 @@
             opacity: .55;
         }
 
-        /* Glass card generic */
         .glass-card {
             background: rgba(255, 255, 255, 0.62);
             backdrop-filter: var(--glass-blur);
@@ -495,7 +492,6 @@
             box-shadow: 0 4px 28px rgba(244, 138, 171, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.75);
         }
 
-        /* Table */
         .table-section {
             background: rgba(255, 255, 255, 0.65);
             backdrop-filter: var(--glass-blur);
@@ -801,7 +797,6 @@
             cursor: not-allowed;
         }
 
-        /* Modal refinements */
         .overlay {
             position: fixed;
             inset: 0;
@@ -869,7 +864,6 @@
             padding: 22px 24px;
         }
 
-        /* Formulários com estilo glassmorphic refinado */
         .form-row {
             display: flex;
             gap: 18px;
@@ -910,7 +904,6 @@
         .form-select {
             cursor: pointer;
         }
-        /* Validação CPF/CNPJ */
         .form-input.valid {
             border-color: #6bcb8b !important;
             box-shadow: 0 0 0 3px rgba(107, 203, 139, 0.2) !important;
@@ -919,7 +912,7 @@
         .form-input.invalid {
             border-color: #e05a6b !important;
             box-shadow: 0 0 0 3px rgba(224, 90, 107, 0.2) !important;
-            background: #fffa fa !important;
+            background: #fffafa !important;
         }
 
         .info-grid {
@@ -1065,7 +1058,6 @@
             transition: width .5s ease;
         }
 
-        /* Configurações */
         .config-sections {
             display: grid;
             gap: 20px;
@@ -1179,7 +1171,6 @@
             min-height: 36px;
         }
 
-        /* Print modal */
         #printPreviewModal.overlay {
             align-items: stretch;
             justify-content: stretch;
@@ -1315,7 +1306,6 @@
             }
         }
 
-        /* Login Overlay */
         #loginOverlay {
             position: fixed;
             inset: 0;
@@ -1500,7 +1490,6 @@
             color: var(--danger);
         }
 
-        /* Pages */
         .page {
             display: none;
         }
@@ -1600,7 +1589,6 @@
             margin-bottom: 16px;
         }
 
-        /* NOVOS ESTILOS PARA CRONOGRAMA */
         .cronograma-editable {
             padding: 6px 8px !important;
             font-size: 12px !important;
@@ -1641,7 +1629,6 @@
             outline: none;
             box-shadow: 0 0 0 2px rgba(244, 138, 171, 0.2);
         }
-        /* Textarea para descrição no cronograma */
         textarea.cronograma-editable {
             resize: vertical;
             min-height: 38px;
@@ -1650,7 +1637,6 @@
             padding: 6px 8px;
         }
 
-        /* Estilo para cards de legislação */
         .legislacao-card {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(8px);
@@ -1686,7 +1672,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Estilo para histórico de fiscalização */
         .fisc-item {
             background: rgba(255, 255, 255, 0.7);
             border: 1.5px solid var(--border-solid);
@@ -1732,7 +1717,6 @@
             }
         }
 
-        /* ─── Cronograma: forçando larguras das colunas ─── */
         #page-cronograma table {
             table-layout: fixed;
             width: 100%;
@@ -1741,7 +1725,6 @@
 </head>
 <body>
 
-    <!-- LOGIN OVERLAY -->
     <div id="loginOverlay">
         <div class="login-card">
             <div class="login-logo">
@@ -1764,7 +1747,6 @@
         </div>
     </div>
 
-    <!-- Loading Overlay -->
     <div id="loadingOverlay" style="display:none;position:fixed;inset:0;background:rgba(245,232,239,.96);z-index:9000;flex-direction:column;align-items:center;justify-content:center;gap:16px">
         <div style="width:72px;height:72px;border-radius:22px;overflow:hidden;box-shadow:0 6px 24px rgba(244,138,171,0.35)"><img src="imag01.jpeg" alt="VISA" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='🏥';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.style.fontSize='44px'"></div>
         <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700">VISA Careiro</div>
@@ -1774,7 +1756,6 @@
         </div>
     </div>
 
-    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">
             <div class="logo-icon"><img src="imag01.jpeg" alt="VISA Logo" onerror="this.parentElement.textContent='🏥'"></div>
@@ -1810,7 +1791,6 @@
         </div>
     </aside>
 
-    <!-- Main -->
     <main class="main">
         <div class="topbar">
             <button class="hamburger" onclick="toggleSidebar()">☰</button>
@@ -1823,7 +1803,6 @@
 
         <div class="content">
 
-            <!-- DASHBOARD -->
             <div class="page active" id="page-dashboard">
                 <div class="stats-grid">
                     <div class="stat-card amarelo">
@@ -1869,7 +1848,6 @@
                 </div>
             </div>
 
-            <!-- ESTABELECIMENTOS -->
             <div class="page" id="page-estabelecimentos">
                 <div class="search-container">
                     <span class="search-icon">🔍</span>
@@ -1912,7 +1890,6 @@
                 </div>
             </div>
 
-            <!-- INATIVOS -->
             <div class="page" id="page-inativos">
                 <div class="search-container">
                     <span class="search-icon">🔍</span>
@@ -1931,7 +1908,6 @@
                 </div>
             </div>
 
-            <!-- CRONOGRAMA MENSAL -->
             <div class="page" id="page-cronograma">
                 <div class="glass-card" style="padding:24px;margin-bottom:20px">
                     <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px">
@@ -1961,7 +1937,6 @@
                 </div>
             </div>
 
-            <!-- LEGISLAÇÃO -->
             <div class="page" id="page-legislacao">
                 <div class="glass-card" style="padding:24px;margin-bottom:20px">
                     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px">
@@ -1972,14 +1947,12 @@
                 </div>
             </div>
 
-            <!-- FISCALIZAÇÃO (HISTÓRICO) -->
             <div class="page" id="page-fiscalizacao">
                 <div class="glass-card" style="padding:24px;margin-bottom:20px">
                     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px">
                         <h2 style="font-family:'Playfair Display',serif;font-size:20px">📋 Histórico de Fiscalizações</h2>
                         <div style="display:flex;gap:10px">
                             <button class="btn btn-print btn-sm" onclick="imprimirFiscalizacoes()">🖨️ Imprimir</button>
-                            <button class="btn btn-primary btn-sm" onclick="openAddFiscalizacao()">＋ Nova Ação</button>
                         </div>
                     </div>
                     <div class="filters-row" style="margin-top:0;margin-bottom:16px">
@@ -1994,7 +1967,6 @@
                 </div>
             </div>
 
-            <!-- CONFIGURAÇÕES -->
             <div class="page" id="page-configuracoes">
                 <div class="config-sections">
                     <div class="config-card">
@@ -2048,7 +2020,6 @@
         </div>
     </main>
 
-    <!-- MODAL DETALHES -->
     <div class="overlay" id="modalDetail">
         <div class="modal" style="max-width:680px">
             <div class="modal-header">
@@ -2059,7 +2030,6 @@
         </div>
     </div>
 
-    <!-- MODAL ADD/EDIT -->
     <div class="overlay" id="modalEstab">
         <div class="modal" style="max-width:680px">
             <div class="modal-header">
@@ -2074,25 +2044,26 @@
                     <div class="form-row"><div class="form-group"><label>Categoria *</label><input class="form-input" id="estCategoria" list="catList" placeholder="Ex: MERCADINHO"><datalist id="catList"></datalist></div><div class="form-group"><label>Tipo de Atividade *</label><input class="form-input" id="estAtividade" placeholder="Ex: VENDA DE ESTIVAS EM GERAL"></div></div>
                     <div class="form-row"><div class="form-group"><label>CNAE *</label><input class="form-input" id="estCnae" placeholder="Ex: 4712-1/00"></div><div class="form-group"><label>Classe de Risco *</label><select class="form-select" id="estRisco"><option value="">Selecionar...</option><option value="BAIXO RISCO">Baixo Risco</option><option value="ALTO RISCO">Alto Risco</option></select></div></div>
                     <div class="form-row"><div class="form-group"><label>Última Fiscalização *</label><input class="form-input" type="date" id="estLicenca"></div><div class="form-group"><label>Órgão Licenciador</label><input class="form-input" id="estOrgao" value="VISA/CAREIRO" readonly style="background:rgba(249,184,200,0.18);cursor:default;color:var(--rosa-dark);font-weight:600;border-color:var(--border-solid)"></div></div>
+                    <div class="form-row">
+                        <div class="form-group" style="flex:1; min-width:100%">
+                            <label>Descrição / Observações da Fiscalização</label>
+                            <textarea class="form-input" id="estFiscDescricao" rows="3" placeholder="Descreva observações da fiscalização..."></textarea>
+                        </div>
+                    </div>
                     <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px"><button class="btn btn-ghost" onclick="closeModal('modalEstab')">Cancelar</button><button class="btn btn-primary" onclick="saveEstab()">💾 Salvar</button></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL CONFIRMAR ATIVAÇÃO -->
     <div class="overlay" id="modalConfirmActivate"><div class="modal" style="max-width:420px"><div class="modal-header" style="background:var(--success-bg)"><h2 style="color:#2d7a4f">✅ Ativar Estabelecimento</h2><button class="modal-close" onclick="closeModal('modalConfirmActivate')">✕</button></div><div class="modal-body"><p style="font-size:15px;margin-bottom:6px">Tem certeza que deseja reativar:</p><p style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:16px" id="activateNomeLabel">—</p><p style="font-size:13px;color:var(--text-muted);margin-bottom:22px">O estabelecimento voltará a aparecer na listagem de ativos.</p><div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-ghost" onclick="closeModal('modalConfirmActivate')">Cancelar</button><button class="btn btn-success" onclick="confirmActivate()">✅ Ativar</button></div></div></div></div>
 
-    <!-- MODAL CONFIRMAR DESATIVAÇÃO -->
     <div class="overlay" id="modalConfirmDel"><div class="modal" style="max-width:420px"><div class="modal-header" style="background:var(--warning-bg)"><h2 style="color:#7a4e00">🚫 Desativar Estabelecimento</h2><button class="modal-close" onclick="closeModal('modalConfirmDel')">✕</button></div><div class="modal-body"><p style="font-size:15px;margin-bottom:6px">Tem certeza que deseja desativar:</p><p style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:16px" id="delNomeLabel">—</p><p style="font-size:13px;color:var(--text-muted);margin-bottom:22px">O estabelecimento será movido para a aba <strong>Inativos</strong>. Você poderá reativá-lo a qualquer momento.</p><div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-ghost" onclick="closeModal('modalConfirmDel')">Cancelar</button><button class="btn btn-amarelo" onclick="confirmDeactivate()">🚫 Desativar</button></div></div></div></div>
 
-    <!-- MODAL PREVIEW IMPRESSÃO -->
     <div class="overlay" id="printPreviewModal"><div class="modal"><div class="modal-header"><div><h2 id="printModalTitle">🖨️ Pré-visualização</h2><div style="font-size:13px;color:var(--text-light);margin-top:4px" id="printModalSub"></div></div><button class="modal-close" onclick="closeModal('printPreviewModal')">✕</button></div><div class="modal-body" style="padding:0"><div style="padding:14px 20px;background:rgba(249,184,200,0.12);border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:center"><button class="btn btn-primary" onclick="executarImpressao()">🖨️ Imprimir / Salvar PDF</button><button class="btn btn-ghost" onclick="closeModal('printPreviewModal')">✕ Fechar</button></div><div style="padding:20px;background:#f4f4f4;min-height:300px"><div id="printContent" style="background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.08)"></div></div></div></div></div>
 
-    <!-- MODAL CONFIRMAR EXCLUSÃO DE LOCALIDADE -->
     <div class="overlay" id="modalConfirmDelBairro"><div class="modal" style="max-width:420px"><div class="modal-header" style="background:var(--warning-bg)"><h2 style="color:#7a4e00">🗺️ Excluir Localidade</h2><button class="modal-close" onclick="closeModal('modalConfirmDelBairro')">✕</button></div><div class="modal-body"><p style="font-size:15px;margin-bottom:6px">Tem certeza que deseja excluir a localidade:</p><p style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:16px" id="delBairroLabel">—</p><p style="font-size:13px;color:var(--text-muted);margin-bottom:22px">Após a exclusão, a localidade não estará mais disponível para seleção. Os cadastros existentes não serão alterados.</p><div style="display:flex;gap:10px;justify-content:flex-end"><button class="btn btn-ghost" onclick="closeModal('modalConfirmDelBairro')">Cancelar</button><button class="btn btn-danger" onclick="confirmRemoveBairro()">🗑️ Excluir localidade</button></div></div></div></div>
 
-    <!-- MODAL LEGISLAÇÃO -->
     <div class="overlay" id="modalLegislacao">
         <div class="modal" style="max-width:520px">
             <div class="modal-header">
@@ -2109,24 +2080,6 @@
         </div>
     </div>
 
-    <!-- MODAL FISCALIZAÇÃO -->
-    <div class="overlay" id="modalFiscalizacao">
-        <div class="modal" style="max-width:580px">
-            <div class="modal-header">
-                <div><h2 id="fiscModalTitle">＋ Nova Ação de Fiscalização</h2></div>
-                <button class="modal-close" onclick="closeModal('modalFiscalizacao')">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group" style="margin-bottom:14px"><label>Estabelecimento *</label><select class="form-select" id="fiscEstabSelect"><option value="">Selecionar...</option></select></div>
-                <div class="form-group" style="margin-bottom:14px"><label>Data *</label><input class="form-input" type="date" id="fiscData"></div>
-                <div class="form-group" style="margin-bottom:14px"><label>Descrição / Observações</label><textarea class="form-input" id="fiscDescricao" rows="3" placeholder="Descreva a ação realizada, achados, providências..."></textarea></div>
-                <input type="hidden" id="fiscEditId">
-                <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px"><button class="btn btn-ghost" onclick="closeModal('modalFiscalizacao')">Cancelar</button><button class="btn btn-primary" onclick="saveFiscalizacao()">💾 Salvar</button></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL DE ACEITAÇÃO DOS TERMOS (PRIMEIRO ACESSO) -->
     <div class="overlay" id="modalTermos" style="z-index:10000">
         <div class="modal" style="max-width:560px;text-align:center">
             <div class="modal-header" style="background:var(--rosa-soft);display:block;text-align:center">
@@ -2168,9 +2121,6 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
-        // ═══════════════════════════════════════════════════════
-        // ESTADO GLOBAL
-        // ═══════════════════════════════════════════════════════
         let DADOS = [];
         let _DADOS_ORIGINAL = [];
         let currentPage = 'dashboard';
@@ -2179,7 +2129,6 @@
         const PAGE_SIZE = 20;
         let filters = { q: '', bairro: '', categoria: '', risco: '', status: '', dataInicio: '', dataFim: '' };
 
-        // Firebase setup (via firebase-config.js)
         let _currentUser = null;
 
         (function() {
@@ -2377,7 +2326,6 @@
                 if (filters.categoria && r.categoria !== filters.categoria) return false;
                 if (filters.risco && r.classe_risco !== filters.risco) return false;
                 if (filters.status && getStatusForEstab(r) !== filters.status) return false;
-                // Filtro de data
                 if (filters.dataInicio || filters.dataFim) {
                     const licDate = r.ultimo_fiscalização ? new Date(r.ultimo_fiscalização + 'T00:00:00') : null;
                     if (!licDate || isNaN(licDate.getTime())) return false;
@@ -2474,7 +2422,7 @@
             currentEstabPage = p;
             renderTable();
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+        }
 
         function openDetail(id) {
             const r = DADOS.find(d => d.id === id);
@@ -2491,7 +2439,8 @@
                 <div class="info-item"><label>Última Fiscalização</label><p>${formatDate(r.ultimo_fiscalização)}</p></div>
                 <div class="info-item"><label>Órgão Licenciador</label><p>${esc(r.orgao_licenciador)||'—'}</p></div>
                 <div class="info-item"><label>CNAE</label><p>${esc(r.cnae)||'—'}</p></div>
-                <div class="info-item"><label>Licenciamento</label><p>${esc(r.licenciamento)||'—'}</p></div>`;
+                <div class="info-item"><label>Licenciamento</label><p>${esc(r.licenciamento)||'—'}</p></div>
+                ${r.fiscalizacao_descricao ? `<div class="info-item full"><label>Descrição da Fiscalização</label><p style="white-space:pre-wrap">${esc(r.fiscalizacao_descricao)}</p></div>` : ''}`;
             openModal('modalDetail');
         }
 
@@ -2645,9 +2594,6 @@
             ).join('') : '<div style="color:var(--text-muted);font-size:13px;padding:10px">Nenhuma categoria cadastrada.</div>';
         }
 
-        // ═══════════════════════════════════════════════
-        // IMPRIMIR ESTABELECIMENTOS
-        // ═══════════════════════════════════════════════
         function imprimirEstabelecimentos() {
             const data = filteredData();
             if (!data.length) { showToast('Nenhum estabelecimento para imprimir!', 'error'); return; }
@@ -2670,7 +2616,6 @@
                 return `<tr><td style="text-align:center;font-weight:600">${i+1}</td><td style="font-weight:600">${esc(r.nome_fantasia)}</td><td style="font-size:11px;color:#555">${esc(r.razao_social)||'&mdash;'}</td><td style="font-size:11px;color:#555">${esc(r.cpf_cnpj)||'&mdash;'}</td><td style="font-size:11px;color:#555;max-width:120px">${esc(r.endereco)||'&mdash;'}</td><td>${esc(r.bairro)||'&mdash;'}</td><td style="font-size:11px">${esc(r.categoria)||'&mdash;'}</td><td style="font-size:10px;color:#555;max-width:110px">${esc(r.tipo_atividade)||'&mdash;'}</td><td style="font-size:10px">${esc(r.cnae)||'&mdash;'}</td><td style="font-size:11px">${r.classe_risco?.includes('BAIXO')?'Baixo':r.classe_risco?.includes('ALTO')?'Alto':'&mdash;'}</td><td style="font-size:10px;color:#555">${esc(r.orgao_licenciador)||'&mdash;'}</td><td style="font-size:11px">${r.ultimo_fiscalização?formatDate(r.ultimo_fiscalização):'&mdash;'}</td><td style="font-size:10px">${esc(r.licenciamento)||'&mdash;'}</td><td><span style="display:inline-block;padding:2px 8px;border-radius:50px;font-size:10px;font-weight:700;background:${stBg};color:${stColor}">${stTxt}</span></td></tr>`;
             }).join('');
 
-            function printStyles() { return `*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'DM Sans',sans-serif;color:#1a1a2e;background:#fff;padding:8px;font-size:8.5px;}.print-header{background:#f48aab;color:white;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-radius:7px 7px 0 0;}.print-header h1{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;line-height:1.2;}.print-header>div:first-child>div:first-child{font-size:8px;opacity:.85;letter-spacing:.6px;text-transform:uppercase;}.print-header>div:first-child>div:last-child{font-size:9px;opacity:.9;margin-top:1px;}.print-meta{font-size:8.5px;opacity:.9;text-align:right;white-space:nowrap;}.print-body{padding:10px 14px;}.print-section-title{font-family:'Playfair Display',serif;font-size:10.5px;border-bottom:1.5px solid #f48aab;padding-bottom:3px;margin:9px 0 6px;color:#f48aab;}.print-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;}.print-stat{background:#fde8ee;border:1px solid #f5c6d4;border-radius:5px;padding:6px 5px;text-align:center;}.pv{font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:#f48aab;line-height:1;}.pl{font-size:7.5px;color:#b08090;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}table{width:100%;border-collapse:collapse;font-size:8px;}thead tr{background:#f48aab;color:white;}th{padding:4px 5px;text-align:left;font-weight:700;font-size:7.5px;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;}td{padding:3.5px 5px;border-bottom:1px solid #fae8f0;vertical-align:middle;font-size:8px;}tr:nth-child(even) td{background:#fff5f8;}.print-footer{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1.5px solid #eee;padding-top:12px;page-break-inside:avoid;break-inside:avoid;}.sign-line{border-top:1px solid #333;margin-top:26px;padding-top:4px;font-size:8.5px;color:#555;text-align:center;}@media print{body{padding:0;}@page{size:landscape;margin:5mm;}.print-footer{page-break-inside:avoid;break-inside:avoid;}}`; }
             const html = `<div class="print-header"><div><div style="font-size:12px;opacity:.85;margin-bottom:4px;letter-spacing:1px;text-transform:uppercase">Prefeitura Municipal de Careiro — AM</div><h1>VISA Careiro</h1><div style="font-size:13px;opacity:.9;margin-top:4px">Vigilância Sanitária — Lista de Estabelecimentos</div></div><div class="print-meta"><div><strong>Data:</strong> ${dateStr} &nbsp;|&nbsp; <strong>Hora:</strong> ${timeStr}</div></div></div><div class="print-body"><div style="background:#f9f9f9;border:1px solid #eee;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:12px;color:#555"><strong style="color:#333">Filtros:</strong> Localidade: <strong>${bairroAtivo}</strong> | Categoria: <strong>${catAtiva}</strong> | Risco: <strong>${riscoAtivo}</strong> | Status: <strong>${statusAtivo}</strong> | Data: <strong>${dataInicio} a ${dataFim}</strong></div><div class="print-section-title">📊 Resumo</div><div class="print-summary"><div class="print-stat"><div class="pv">${data.length}</div><div class="pl">Total</div></div><div class="print-stat"><div class="pv" style="color:#2a6e47">${cFisc}</div><div class="pl">Fiscalizados</div></div><div class="print-stat"><div class="pv" style="color:#7a4e00">${cPend}</div><div class="pl">Pendentes</div></div></div><div class="print-section-title">🏪 Estabelecimentos</div><table><thead><tr><th style="width:28px">#</th><th>Nome Fantasia</th><th>Razão social/ proprietário</th><th>CPF/CNPJ</th><th>Endereço</th><th>Localidade</th><th>Categoria</th><th>Tipo Atividade</th><th>CNAE</th><th>Risco</th><th>Órgão Lic.</th><th>Fiscalização</th><th>Licenciamento</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table><div class="print-footer"><div><div style="font-size:12px;color:#555;margin-bottom:32px">Responsável pela Emissão:</div><div class="sign-line">Chefe da Vigilância Sanitária Municipal</div></div><div><div style="font-size:12px;color:#555;margin-bottom:32px">Fiscal Responsável:</div><div class="sign-line">${esc(_currentUser?.profile?.nome || 'Fiscal Sanitário')}</div></div></div><div style="margin-top:16px;padding:8px 12px;background:#f9f9f9;border-radius:6px;font-size:9px;color:#888;text-align:center">VISA Careiro — ${dateStr} às ${timeStr} — ${data.length} estabelecimentos</div></div>`;
             document.getElementById('printModalTitle').textContent = '🖨️ Lista de Estabelecimentos';
             document.getElementById('printModalSub').textContent = data.length + ' estabelecimentos';
@@ -2690,9 +2635,6 @@
             return `*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'DM Sans',sans-serif;color:#1a1a2e;background:#fff;padding:8px;font-size:8.5px;}.print-header{background:#f48aab;color:white;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-radius:7px 7px 0 0;}.print-header h1{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;line-height:1.2;}.print-header>div:first-child>div:first-child{font-size:8px;opacity:.85;letter-spacing:.6px;text-transform:uppercase;}.print-header>div:first-child>div:last-child{font-size:9px;opacity:.9;margin-top:1px;}.print-meta{font-size:8.5px;opacity:.9;text-align:right;white-space:nowrap;}.print-body{padding:10px 14px;}.print-section-title{font-family:'Playfair Display',serif;font-size:10.5px;border-bottom:1.5px solid #f48aab;padding-bottom:3px;margin:9px 0 6px;color:#f48aab;}.print-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;}.print-stat{background:#fde8ee;border:1px solid #f5c6d4;border-radius:5px;padding:6px 5px;text-align:center;}.pv{font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:#f48aab;line-height:1;}.pl{font-size:7.5px;color:#b08090;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}table{width:100%;border-collapse:collapse;font-size:8px;}thead tr{background:#f48aab;color:white;}th{padding:4px 5px;text-align:left;font-weight:700;font-size:7.5px;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap;}td{padding:3.5px 5px;border-bottom:1px solid #fae8f0;vertical-align:middle;font-size:8px;}tr:nth-child(even) td{background:#fff5f8;}.print-footer{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1.5px solid #eee;padding-top:12px;page-break-inside:avoid;break-inside:avoid;}.sign-line{border-top:1px solid #333;margin-top:26px;padding-top:4px;font-size:8.5px;color:#555;text-align:center;}@media print{body{padding:0;}@page{size:landscape;margin:5mm;}.print-footer{page-break-inside:avoid;break-inside:avoid;}}`;
         }
 
-        // ═══════════════════════════════════════════════
-        // IMPRIMIR CRONOGRAMA
-        // ═══════════════════════════════════════════════
         function imprimirCronograma() {
             const mesSel = document.getElementById('cronogramaMes');
             const anoSel = document.getElementById('cronogramaAno');
@@ -2700,7 +2642,6 @@
             const ano = parseInt(anoSel.value);
             const nomeMes = mesSel.options[mesSel.selectedIndex].text;
 
-            // Coleta os dados da tabela (tópicos)
             const inputs = document.querySelectorAll('#cronogramaTableBody .cronograma-topico');
             const mapaPorDia = {};
             inputs.forEach(inp => {
@@ -2939,7 +2880,6 @@
             document.getElementById('estabModalTitle').textContent = '＋ Novo Estabelecimento';
             document.getElementById('estabModalSub').textContent = 'Preencha os dados do novo estabelecimento';
             clearEstabForm();
-            // Limpa validação visual do CPF/CNPJ
             const cpfCnpjEl = document.getElementById('estCpfCnpj');
             if (cpfCnpjEl) {
                 cpfCnpjEl.classList.remove('valid', 'invalid');
@@ -2966,8 +2906,8 @@
             document.getElementById('estRisco').value = r.classe_risco || '';
             document.getElementById('estLicenca').value = r.ultimo_fiscalização?.slice(0, 10) || '';
             document.getElementById('estOrgao').value = 'VISA/CAREIRO';
+            document.getElementById('estFiscDescricao').value = r.fiscalizacao_descricao || '';
 
-            // Dispara validação visual para o CPF/CNPJ carregado
             const cpfCnpjEl = document.getElementById('estCpfCnpj');
             if (cpfCnpjEl && r.cpf_cnpj) {
                 cpfCnpjEl.dispatchEvent(new Event('input'));
@@ -2978,7 +2918,7 @@
         }
 
         function clearEstabForm() {
-            ['estNome', 'estRazao', 'estCpfCnpj', 'estEndereco', 'estCategoria', 'estAtividade', 'estCnae', 'estLicenca', 'estOrgao'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+            ['estNome', 'estRazao', 'estCpfCnpj', 'estEndereco', 'estCategoria', 'estAtividade', 'estCnae', 'estLicenca', 'estOrgao', 'estFiscDescricao'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
             document.getElementById('estBairro').value = '';
             document.getElementById('estRisco').value = '';
             document.getElementById('estLicenciamento').value = '';
@@ -2986,9 +2926,6 @@
             if (cpfCnpjEl) cpfCnpjEl.classList.remove('valid', 'invalid');
         }
 
-        // ═══════════════════════════════════
-        // VALIDAÇÃO DE CPF E CNPJ
-        // ═══════════════════════════════════
         function validarCPF(cpf) {
             cpf = cpf.replace(/\D/g, '');
             if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
@@ -3075,6 +3012,7 @@
             const risco = document.getElementById('estRisco').value;
             const licenca = document.getElementById('estLicenca').value;
             const orgao = 'VISA/CAREIRO';
+            const fiscDescricao = document.getElementById('estFiscDescricao').value.trim();
 
             if (!nome) { showToast('Informe o Nome Fantasia!', 'error'); return; }
             if (!razao) { showToast('Informe a Razão social/ proprietário!', 'error'); return; }
@@ -3084,7 +3022,6 @@
                 showToast('CPF deve ter 11 dígitos ou CNPJ 14 dígitos!', 'error');
                 return;
             }
-            // Valida dígitos verificadores
             if (cpfCnpjClean.length === 11 && !validarCPF(cpfCnpjClean)) {
                 showToast('CPF inválido! Verifique os dígitos.', 'error');
                 return;
@@ -3114,7 +3051,8 @@
                 cnae,
                 classe_risco: risco,
                 ultimo_fiscalização: licenca,
-                orgao_licenciador: orgao
+                orgao_licenciador: orgao,
+                fiscalizacao_descricao: fiscDescricao
             };
 
             if (currentEditId !== null) {
@@ -3158,9 +3096,6 @@
             renderTable();
         }
 
-        // ═══════════════════════════════════════════════
-        // CRONOGRAMA MENSAL
-        // ═══════════════════════════════════════════════
         function getDiasNoMes(mes, ano) { return new Date(ano, mes, 0).getDate(); }
 
         function renderCronograma() {
@@ -3215,13 +3150,11 @@
         function addTopico(btn, dia) {
             const cell = btn.closest('.cronograma-topicos-cell');
             const topicosDivs = cell.querySelectorAll('div[style*="display:flex"]');
-            // Transforma o botão + do último em ×
             const lastDiv = topicosDivs[topicosDivs.length - 1];
             const addBtn = lastDiv.querySelector('.cronograma-add-topico');
             if (addBtn) {
                 addBtn.outerHTML = `<button type="button" class="btn btn-sm btn-ghost cronograma-remove-topico" data-dia="${dia}" data-index="${topicosDivs.length-1}" style="padding:2px 8px;font-size:14px;line-height:1;color:var(--danger)" onclick="removeTopico(this, ${dia}, ${topicosDivs.length-1})">×</button>`;
             }
-            // Adiciona nova linha
             const newIdx = topicosDivs.length;
             const newDiv = document.createElement('div');
             newDiv.style.cssText = 'display:flex;gap:8px;margin-bottom:4px;align-items:center';
@@ -3234,7 +3167,6 @@
         function removeTopico(btn, dia, idx) {
             const div = btn.closest('div');
             div.remove();
-            // Não precisa reindexar, no salvamento coletamos todos os inputs
         }
 
         function salvarCronograma() {
@@ -3259,9 +3191,6 @@
             showToast('Cronograma salvo! ✅', 'success');
         }
 
-        // ═══════════════════════════════════════════════
-        // LEGISLAÇÃO
-        // ═══════════════════════════════════════════════
         function renderLegislacao() {
             const lista = getLegislacaoData();
             const container = document.getElementById('legislacaoList');
@@ -3336,11 +3265,8 @@
             showToast('Documento removido.', 'success');
         }
 
-        // ═══════════════════════════════════════════════
-        // FISCALIZAÇÃO (HISTÓRICO)
-        // ═══════════════════════════════════════════════
         function renderFiscalizacoes() {
-            const lista = getFiscalizacoesData();
+            const lista = DADOS.filter(r => !isDisabled(r.id) && r.fiscalizacao_descricao && r.fiscalizacao_descricao.trim() !== '');
             const container = document.getElementById('fiscalizacaoList');
             const filtroEstab = document.getElementById('fiscFilterEstab');
             const filtroData = document.getElementById('fiscFilterData');
@@ -3355,65 +3281,60 @@
 
             let filtrada = [...lista];
             if (filtroEstab && filtroEstab.value) {
-                filtrada = filtrada.filter(f => f.estabelecimento === filtroEstab.value);
+                filtrada = filtrada.filter(f => f.nome_fantasia === filtroEstab.value);
             }
             if (filtroData && filtroData.value) {
-                filtrada = filtrada.filter(f => f.data === filtroData.value);
+                filtrada = filtrada.filter(f => f.ultimo_fiscalização === filtroData.value);
             }
             if (filtroMes && filtroMes.value) {
                 const [anoF, mesF] = filtroMes.value.split('-');
                 filtrada = filtrada.filter(f => {
-                    const d = f.data;
+                    const d = f.ultimo_fiscalização;
                     if (!d) return false;
                     const partes = d.split('-');
                     return partes[0] === anoF && partes[1] === mesF;
                 });
             }
-            filtrada.sort((a, b) => new Date(b.data) - new Date(a.data));
+            filtrada.sort((a, b) => new Date(b.ultimo_fiscalização) - new Date(a.ultimo_fiscalização));
 
             if (!container) return;
             if (!filtrada.length) {
-                container.innerHTML = '<div class="empty-state"><div class="icon">📋</div><h3>Nenhuma ação registrada</h3><p>Registre as fiscalizações realizadas.</p></div>';
+                container.innerHTML = '<div class="empty-state"><div class="icon">📋</div><h3>Nenhuma descrição registrada</h3><p>Adicione observações na edição do estabelecimento.</p></div>';
                 return;
             }
-            container.innerHTML = filtrada.map((f, i) => {
-                const idxOriginal = lista.indexOf(f);
+            container.innerHTML = filtrada.map(f => {
                 return `
                 <div class="fisc-item">
                     <div class="fisc-item-header">
-                        <span class="fisc-estab">🏪 ${esc(f.estabelecimento)}</span>
-                        <span class="fisc-data">📅 ${formatDate(f.data)}</span>
+                        <span class="fisc-estab">🏪 ${esc(f.nome_fantasia)}</span>
+                        <span class="fisc-data">📅 ${formatDate(f.ultimo_fiscalização)}</span>
                     </div>
                     <div class="fisc-item-body">
-                        ${esc(f.descricao||'Sem descrição adicional.')}
-                    </div>
-                    <div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end">
-                        <button class="btn btn-ghost btn-sm" onclick="openEditFiscalizacao(${idxOriginal})">✏️ Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="removeFiscalizacao(${idxOriginal})">🗑️ Remover</button>
+                        ${esc(f.fiscalizacao_descricao||'Sem descrição adicional.')}
                     </div>
                 </div>`;
             }).join('');
         }
 
         function imprimirFiscalizacoes() {
-            const lista = getFiscalizacoesData();
+            const lista = DADOS.filter(r => !isDisabled(r.id) && r.fiscalizacao_descricao && r.fiscalizacao_descricao.trim() !== '');
             const filtroEstab = document.getElementById('fiscFilterEstab')?.value || '';
             const filtroData = document.getElementById('fiscFilterData')?.value || '';
             const filtroMes = document.getElementById('fiscFilterMes')?.value || '';
 
             let filtrada = [...lista];
-            if (filtroEstab) filtrada = filtrada.filter(f => f.estabelecimento === filtroEstab);
-            if (filtroData) filtrada = filtrada.filter(f => f.data === filtroData);
+            if (filtroEstab) filtrada = filtrada.filter(f => f.nome_fantasia === filtroEstab);
+            if (filtroData) filtrada = filtrada.filter(f => f.ultimo_fiscalização === filtroData);
             if (filtroMes) {
                 const [anoF, mesF] = filtroMes.split('-');
                 filtrada = filtrada.filter(f => {
-                    const d = f.data;
+                    const d = f.ultimo_fiscalização;
                     if (!d) return false;
                     const partes = d.split('-');
                     return partes[0] === anoF && partes[1] === mesF;
                 });
             }
-            filtrada.sort((a, b) => new Date(b.data) - new Date(a.data));
+            filtrada.sort((a, b) => new Date(b.ultimo_fiscalização) - new Date(a.ultimo_fiscalização));
 
             if (!filtrada.length) { showToast('Nenhuma fiscalização para imprimir!', 'error'); return; }
 
@@ -3424,9 +3345,9 @@
             const rows = filtrada.map((f, i) => `
                 <tr>
                     <td style="text-align:center">${i+1}</td>
-                    <td>${esc(f.estabelecimento)}</td>
-                    <td>${formatDate(f.data)}</td>
-                    <td style="font-size:10px;color:#555">${esc(f.descricao||'—')}</td>
+                    <td>${esc(f.nome_fantasia)}</td>
+                    <td>${formatDate(f.ultimo_fiscalização)}</td>
+                    <td style="font-size:10px;color:#555">${esc(f.fiscalizacao_descricao||'—')}</td>
                 </tr>
             `).join('');
 
@@ -3471,69 +3392,6 @@
             openModal('printPreviewModal');
         }
 
-        function openAddFiscalizacao() {
-            document.getElementById('fiscModalTitle').textContent = '＋ Nova Ação de Fiscalização';
-            document.getElementById('fiscEstabSelect').value = '';
-            document.getElementById('fiscData').value = '';
-            document.getElementById('fiscDescricao').value = '';
-            document.getElementById('fiscEditId').value = '';
-            const sel = document.getElementById('fiscEstabSelect');
-            const estabelecimentos = DADOS.filter(r => !isDisabled(r.id)).sort((a, b) => a.nome_fantasia.localeCompare(b.nome_fantasia));
-            sel.innerHTML = '<option value="">Selecionar...</option>' + estabelecimentos.map(r => `<option value="${esc(r.nome_fantasia)}">${esc(r.nome_fantasia)}</option>`).join('');
-            openModal('modalFiscalizacao');
-        }
-
-        function openEditFiscalizacao(index) {
-            const lista = getFiscalizacoesData();
-            const f = lista[index];
-            if (!f) return;
-            document.getElementById('fiscModalTitle').textContent = '✏️ Editar Ação de Fiscalização';
-            document.getElementById('fiscEstabSelect').value = f.estabelecimento || '';
-            document.getElementById('fiscData').value = f.data || '';
-            document.getElementById('fiscDescricao').value = f.descricao || '';
-            document.getElementById('fiscEditId').value = index;
-            const sel = document.getElementById('fiscEstabSelect');
-            const estabelecimentos = DADOS.filter(r => !isDisabled(r.id)).sort((a, b) => a.nome_fantasia.localeCompare(b.nome_fantasia));
-            sel.innerHTML = '<option value="">Selecionar...</option>' + estabelecimentos.map(r => `<option value="${esc(r.nome_fantasia)}">${esc(r.nome_fantasia)}</option>`).join('');
-            if (f.estabelecimento) sel.value = f.estabelecimento;
-            openModal('modalFiscalizacao');
-        }
-
-        function saveFiscalizacao() {
-            const estabelecimento = document.getElementById('fiscEstabSelect').value;
-            const data = document.getElementById('fiscData').value;
-            const descricao = document.getElementById('fiscDescricao').value.trim();
-            const editId = document.getElementById('fiscEditId').value;
-
-            if (!estabelecimento) { showToast('Selecione o estabelecimento!', 'error'); return; }
-            if (!data) { showToast('Informe a data!', 'error'); return; }
-
-            const entry = { estabelecimento, data, descricao };
-            const lista = getFiscalizacoesData();
-            if (editId !== '') {
-                const idx = parseInt(editId);
-                if (idx >= 0 && idx < lista.length) { lista[idx] = entry; showToast('Ação atualizada! ✅', 'success'); } else { showToast('Erro ao atualizar.', 'error'); return; }
-            } else {
-                lista.push(entry);
-                showToast('Ação registrada! ✅', 'success');
-            }
-            saveFiscalizacoesData(lista);
-            closeModal('modalFiscalizacao');
-            renderFiscalizacoes();
-        }
-
-        function removeFiscalizacao(index) {
-            if (!confirm('Remover esta ação de fiscalização?')) return;
-            const lista = getFiscalizacoesData();
-            lista.splice(index, 1);
-            saveFiscalizacoesData(lista);
-            renderFiscalizacoes();
-            showToast('Ação removida.', 'success');
-        }
-
-        // ═══════════════════════════════════════════════
-        // AUTENTICAÇÃO
-        // ═══════════════════════════════════════════════
         async function doLogin() {
             const email = document.getElementById('loginEmail').value.trim().toLowerCase();
             const senha = document.getElementById('loginSenha').value;
@@ -3581,9 +3439,6 @@
             } catch (err) { showToast('Erro ao alterar senha: ' + (err.message || err.code), 'error'); }
         }
 
-        // ═══════════════════════════════════════════════
-        // CONTROLE DE ACEITAÇÃO DOS TERMOS
-        // ═══════════════════════════════════════════════
         function verificarTermos() {
             const aceitos = localStorage.getItem('visa_terms_accepted');
             if (_currentUser && !aceitos) {
@@ -3663,7 +3518,7 @@
             renderDashboard();
         }
         document.addEventListener('DOMContentLoaded', () => {
-            const skipIds = new Set(['estCnae', 'estLicenca', 'loginEmail', 'loginSenha', 'legLink']);
+            const skipIds = new Set(['estCnae', 'estLicenca', 'loginEmail', 'loginSenha', 'legLink', 'estFiscDescricao']);
 
             function applyUppercase(el) {
                 if (!el || skipIds.has(el.id)) return;
@@ -3675,7 +3530,6 @@
             }
             document.addEventListener('input', e => { const el = e.target; if (el.classList.contains('form-input') || el.classList.contains('auto-upper') || el.classList.contains('search-input') || el.id === 'newBairroName') applyUppercase(el); });
 
-            // Máscara e validação visual CPF/CNPJ
             const cpfCnpjInput = document.getElementById('estCpfCnpj');
             if (cpfCnpjInput) {
                 cpfCnpjInput.addEventListener('input', function() {
@@ -3692,11 +3546,8 @@
                         v = v.replace(/(\d{4})(\d{1,2})$/, '$1-$2');
                     }
                     this.value = v;
-
-                    // Validação visual
                     validarCpfCnpjVisual(this);
                 });
-                // Força validação ao carregar (caso edite)
                 cpfCnpjInput.addEventListener('blur', function() {
                     validarCpfCnpjVisual(this);
                 });
@@ -3704,6 +3555,7 @@
         });
         boot();
     </script>
-    <script src="changelog.js"></script>
+    <script src="changelog.js">
+    </script>
 </body>
 </html>
