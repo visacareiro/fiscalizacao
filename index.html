@@ -1778,7 +1778,7 @@
         <div class="nav-section">Fiscalização</div>
         <button class="nav-item" data-page="cronograma" onclick="navigate('cronograma')"><span class="icon">📅</span> Cronograma Mensal</button>
         <button class="nav-item" data-page="legislacao" onclick="navigate('legislacao')"><span class="icon">📚</span> Legislação</button>
-        <button class="nav-item" data-page="fiscalizacao" onclick="navigate('fiscalizacao')"><span class="icon">📋</span> Fiscalização</button>
+        <!-- Botão Fiscalização removido -->
         <div class="nav-section">Sistema</div>
         <button class="nav-item" data-page="configuracoes" onclick="navigate('configuracoes')"><span class="icon">⚙️</span> Configurações</button>
 
@@ -1947,25 +1947,7 @@
                 </div>
             </div>
 
-            <div class="page" id="page-fiscalizacao">
-                <div class="glass-card" style="padding:24px;margin-bottom:20px">
-                    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px">
-                        <h2 style="font-family:'Playfair Display',serif;font-size:20px">📋 Histórico de Fiscalizações</h2>
-                        <div style="display:flex;gap:10px">
-                            <button class="btn btn-print btn-sm" onclick="imprimirFiscalizacoes()">🖨️ Imprimir</button>
-                        </div>
-                    </div>
-                    <div class="filters-row" style="margin-top:0;margin-bottom:16px">
-                        <select class="filter-select" id="fiscFilterEstab" onchange="renderFiscalizacoes()" style="min-width:220px">
-                            <option value="">Todos os estabelecimentos</option>
-                        </select>
-                        <input class="form-input" type="date" id="fiscFilterData" onchange="renderFiscalizacoes()" style="width:auto;min-width:160px" placeholder="Filtrar por data">
-                        <input class="form-input" type="month" id="fiscFilterMes" onchange="renderFiscalizacoes()" style="width:auto;min-width:180px" title="Filtrar por mês">
-                        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('fiscFilterEstab').value='';document.getElementById('fiscFilterData').value='';document.getElementById('fiscFilterMes').value='';renderFiscalizacoes()">↺ Limpar</button>
-                    </div>
-                    <div id="fiscalizacaoList"></div>
-                </div>
-            </div>
+            <!-- Página Fiscalização removida -->
 
             <div class="page" id="page-configuracoes">
                 <div class="config-sections">
@@ -2194,49 +2176,29 @@
         }
 
         function getInspections() { return _fbCache.inspections; }
-
         function getAgents() { return _fbCache.agents; }
-
         function getConfig() { return _fbCache.config; }
-
         function getCustom() { return _fbCache.custom; }
-
         function saveCustom(d) { _fbCache.custom = d; _saveField('custom', d); }
-
         function getDeletedIds() { return _fbCache.deleted; }
-
         function saveDeletedIds(d) { _fbCache.deleted = d; _saveField('deleted', d); }
-
         function getDisabledIds() { return _fbCache.disabled || []; }
-
         function saveDisabledIds(d) { _fbCache.disabled = d; _saveField('disabled', d); }
-
         function isDisabled(id) { return getDisabledIds().map(String).includes(String(id)); }
-
         function getEditedMap() { return _fbCache.edited; }
-
         function saveEditedMap(d) { _fbCache.edited = d; _saveField('edited', d); }
-
         function getBairros() { return _fbCache.bairros && _fbCache.bairros.length ? _fbCache.bairros : ['Centro']; }
-
         function saveBairros(d) { _fbCache.bairros = d; _saveField('bairros', d); }
-
         function getInativosData() { return _fbCache.inativos_data || []; }
         async function saveInativosData(lista) {
             _fbCache.inativos_data = lista;
             try { await _INATIVOS_REF.set({ estabelecimentos: lista, updatedAt: new Date().toISOString() }); } catch (e) { console.error(e); }
         }
-
         function getCronogramaData() { return _fbCache.cronograma_data || []; }
-
         function saveCronogramaData(d) { _fbCache.cronograma_data = d; _saveField('cronograma_data', d); }
-
         function getLegislacaoData() { return _fbCache.legislacao_data || []; }
-
         function saveLegislacaoData(d) { _fbCache.legislacao_data = d; _saveField('legislacao_data', d); }
-
         function getFiscalizacoesData() { return _fbCache.fiscalizacoes_data || []; }
-
         function saveFiscalizacoesData(d) { _fbCache.fiscalizacoes_data = d; _saveField('fiscalizacoes_data', d); }
 
         function rebuildDADOS() {
@@ -2302,7 +2264,7 @@
             document.getElementById('page-' + pg).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.page === pg));
             const titles = { dashboard: 'Dashboard', estabelecimentos: 'Estabelecimentos', inativos: 'Estabelecimentos Inativos',
-                cronograma: 'Cronograma Mensal', legislacao: 'Legislação', fiscalizacao: 'Fiscalização', configuracoes: 'Configurações' };
+                cronograma: 'Cronograma Mensal', legislacao: 'Legislação', configuracoes: 'Configurações' };
             document.getElementById('topbarTitle').textContent = titles[pg] || pg;
             closeSidebar();
             if (pg === 'dashboard') renderDashboard();
@@ -2310,12 +2272,11 @@
             if (pg === 'inativos') renderInativos();
             if (pg === 'cronograma') renderCronograma();
             if (pg === 'legislacao') renderLegislacao();
-            if (pg === 'fiscalizacao') renderFiscalizacoes();
+            // Página fiscalização removida
             if (pg === 'configuracoes') renderConfig();
         }
 
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
-
         function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); }
 
         function filteredData() {
@@ -2359,13 +2320,9 @@
         }
 
         function setFilter(type, val) { filters[type] = val; currentEstabPage = 1; if (currentPage === 'estabelecimentos') renderTable(); }
-
         function onFilterCategoria() { filters.categoria = document.getElementById('filterCategoria').value; currentEstabPage = 1; renderTable(); }
-
         function onFilterRisco() { filters.risco = document.getElementById('filterRisco').value; currentEstabPage = 1; renderTable(); }
-
         function onSearch() { filters.q = document.getElementById('searchInput').value; currentEstabPage = 1; document.getElementById('searchClear').style.display = filters.q ? 'block' : 'none'; renderTable(); }
-
         function clearSearch() { document.getElementById('searchInput').value = ''; filters.q = ''; document.getElementById('searchClear').style.display = 'none'; renderTable(); }
 
         function renderTable() {
@@ -2840,13 +2797,10 @@
         }
 
         function downloadJSON(obj, filename) { downloadBlob(new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' }), filename); }
-
         function downloadBlob(blob, filename) { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(() => URL.revokeObjectURL(a.href), 1000); }
-
         function readJSON(file, cb) { const reader = new FileReader(); reader.onload = ev => { try { cb(JSON.parse(ev.target.result)); } catch { showToast('Erro ao ler o arquivo JSON.', 'error'); } }; reader.readAsText(file); }
 
         function openModal(id) { document.getElementById(id)?.classList.add('open'); }
-
         function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
 
         function refreshAllCategoryDropdowns() {
@@ -2871,7 +2825,7 @@
             if (currentPage === 'dashboard') renderDashboard();
             if (currentPage === 'cronograma') renderCronograma();
             if (currentPage === 'legislacao') renderLegislacao();
-            if (currentPage === 'fiscalizacao') renderFiscalizacoes();
+            // Página fiscalização removida
             if (currentPage === 'configuracoes') updateConfigStats();
         }
 
@@ -3265,132 +3219,7 @@
             showToast('Documento removido.', 'success');
         }
 
-        function renderFiscalizacoes() {
-            const lista = DADOS.filter(r => !isDisabled(r.id) && r.fiscalizacao_descricao && r.fiscalizacao_descricao.trim() !== '');
-            const container = document.getElementById('fiscalizacaoList');
-            const filtroEstab = document.getElementById('fiscFilterEstab');
-            const filtroData = document.getElementById('fiscFilterData');
-            const filtroMes = document.getElementById('fiscFilterMes');
-
-            if (filtroEstab && filtroEstab.options.length <= 1) {
-                const estabelecimentos = DADOS.filter(r => !isDisabled(r.id)).sort((a, b) => a.nome_fantasia.localeCompare(b.nome_fantasia));
-                const curVal = filtroEstab.value;
-                filtroEstab.innerHTML = '<option value="">Todos os estabelecimentos</option>' + estabelecimentos.map(r => `<option value="${esc(r.nome_fantasia)}">${esc(r.nome_fantasia)}</option>`).join('');
-                if (curVal) filtroEstab.value = curVal;
-            }
-
-            let filtrada = [...lista];
-            if (filtroEstab && filtroEstab.value) {
-                filtrada = filtrada.filter(f => f.nome_fantasia === filtroEstab.value);
-            }
-            if (filtroData && filtroData.value) {
-                filtrada = filtrada.filter(f => f.ultimo_fiscalização === filtroData.value);
-            }
-            if (filtroMes && filtroMes.value) {
-                const [anoF, mesF] = filtroMes.value.split('-');
-                filtrada = filtrada.filter(f => {
-                    const d = f.ultimo_fiscalização;
-                    if (!d) return false;
-                    const partes = d.split('-');
-                    return partes[0] === anoF && partes[1] === mesF;
-                });
-            }
-            filtrada.sort((a, b) => new Date(b.ultimo_fiscalização) - new Date(a.ultimo_fiscalização));
-
-            if (!container) return;
-            if (!filtrada.length) {
-                container.innerHTML = '<div class="empty-state"><div class="icon">📋</div><h3>Nenhuma descrição registrada</h3><p>Adicione observações na edição do estabelecimento.</p></div>';
-                return;
-            }
-            container.innerHTML = filtrada.map(f => {
-                return `
-                <div class="fisc-item">
-                    <div class="fisc-item-header">
-                        <span class="fisc-estab">🏪 ${esc(f.nome_fantasia)}</span>
-                        <span class="fisc-data">📅 ${formatDate(f.ultimo_fiscalização)}</span>
-                    </div>
-                    <div class="fisc-item-body">
-                        ${esc(f.fiscalizacao_descricao||'Sem descrição adicional.')}
-                    </div>
-                </div>`;
-            }).join('');
-        }
-
-        function imprimirFiscalizacoes() {
-            const lista = DADOS.filter(r => !isDisabled(r.id) && r.fiscalizacao_descricao && r.fiscalizacao_descricao.trim() !== '');
-            const filtroEstab = document.getElementById('fiscFilterEstab')?.value || '';
-            const filtroData = document.getElementById('fiscFilterData')?.value || '';
-            const filtroMes = document.getElementById('fiscFilterMes')?.value || '';
-
-            let filtrada = [...lista];
-            if (filtroEstab) filtrada = filtrada.filter(f => f.nome_fantasia === filtroEstab);
-            if (filtroData) filtrada = filtrada.filter(f => f.ultimo_fiscalização === filtroData);
-            if (filtroMes) {
-                const [anoF, mesF] = filtroMes.split('-');
-                filtrada = filtrada.filter(f => {
-                    const d = f.ultimo_fiscalização;
-                    if (!d) return false;
-                    const partes = d.split('-');
-                    return partes[0] === anoF && partes[1] === mesF;
-                });
-            }
-            filtrada.sort((a, b) => new Date(b.ultimo_fiscalização) - new Date(a.ultimo_fiscalização));
-
-            if (!filtrada.length) { showToast('Nenhuma fiscalização para imprimir!', 'error'); return; }
-
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('pt-BR');
-            const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-
-            const rows = filtrada.map((f, i) => `
-                <tr>
-                    <td style="text-align:center">${i+1}</td>
-                    <td>${esc(f.nome_fantasia)}</td>
-                    <td>${formatDate(f.ultimo_fiscalização)}</td>
-                    <td style="font-size:10px;color:#555">${esc(f.fiscalizacao_descricao||'—')}</td>
-                </tr>
-            `).join('');
-
-            const resumoMsg = [
-                filtroEstab ? `Estabelecimento: ${filtroEstab}` : '',
-                filtroData ? `Data: ${formatDate(filtroData)}` : '',
-                filtroMes ? `Mês/Ano: ${filtroMes}` : ''
-            ].filter(Boolean).join(' | ') || 'Sem filtros';
-
-            const html = `
-                <div class="print-header">
-                    <div>
-                        <div style="font-size:12px;opacity:.85;margin-bottom:4px;letter-spacing:1px;text-transform:uppercase">Prefeitura Municipal de Careiro — AM</div>
-                        <h1>VISA Careiro</h1>
-                        <div style="font-size:13px;opacity:.9;margin-top:4px">Vigilância Sanitária — Histórico de Fiscalizações</div>
-                    </div>
-                    <div class="print-meta"><div><strong>Data:</strong> ${dateStr} &nbsp;|&nbsp; <strong>Hora:</strong> ${timeStr}</div></div>
-                </div>
-                <div class="print-body">
-                    <div style="background:#f9f9f9;border:1px solid #eee;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:12px;color:#555">
-                        <strong style="color:#333">Filtros:</strong> ${resumoMsg}
-                    </div>
-                    <div class="print-section-title">📊 Resumo</div>
-                    <div class="print-summary">
-                        <div class="print-stat"><div class="pv">${filtrada.length}</div><div class="pl">Total de Ações</div></div>
-                    </div>
-                    <div class="print-section-title">📋 Ações de Fiscalização</div>
-                    <table>
-                        <thead><tr><th style="width:30px">#</th><th>Estabelecimento</th><th>Data</th><th>Descrição</th></tr></thead>
-                        <tbody>${rows}</tbody>
-                    </table>
-                    <div class="print-footer">
-                        <div><div style="font-size:12px;color:#555;margin-bottom:32px">Responsável pela Emissão:</div><div class="sign-line">Chefe da Vigilância Sanitária Municipal</div></div>
-                        <div><div style="font-size:12px;color:#555;margin-bottom:32px">Fiscal Responsável:</div><div class="sign-line">${esc(_currentUser?.profile?.nome || 'Fiscal Sanitário')}</div></div>
-                    </div>
-                    <div style="margin-top:16px;padding:8px 12px;background:#f9f9f9;border-radius:6px;font-size:9px;color:#888;text-align:center">VISA Careiro — ${dateStr} às ${timeStr} — ${filtrada.length} ações</div>
-                </div>`;
-
-            document.getElementById('printModalTitle').textContent = '🖨️ Histórico de Fiscalizações';
-            document.getElementById('printModalSub').textContent = filtrada.length + ' ações';
-            document.getElementById('printContent').innerHTML = html;
-            openModal('printPreviewModal');
-        }
+        // Funções renderFiscalizacoes e imprimirFiscalizacoes removidas
 
         async function doLogin() {
             const email = document.getElementById('loginEmail').value.trim().toLowerCase();
