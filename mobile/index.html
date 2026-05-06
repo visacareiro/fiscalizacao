@@ -143,6 +143,11 @@
             box-shadow: 0 2px 14px rgba(244,138,171,0.10); transition: box-shadow .2s; -webkit-tap-highlight-color: transparent;
             -webkit-transform: translateZ(0); transform: translateZ(0);
         }
+        .crono-item.today {
+            background-color: #fef3c7;
+            border-color: #f6c341;
+            box-shadow: 0 2px 14px rgba(246,195,65,0.2);
+        }
         .estab-card:active, .crono-item:active, .leg-item:active, .fisc-item:active { transform: scale(0.984) !important; background: rgba(244,138,171,0.10) !important; }
         .estab-card-nome  { font-weight: 700; font-size: 13px; color: var(--text); line-height: 1.3; }
         .estab-card-razao { font-size: 11px; color: var(--text-light); margin-top: 2px; }
@@ -227,6 +232,7 @@
         .empty-state .icon { font-size: 44px; margin-bottom: 12px; }
         .empty-state h3    { font-size: 16px; font-weight: 600; margin-bottom: 5px; color: var(--text-light); }
         .empty-state p     { font-size: 13px; }
+        .color-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
         select, input:not([type=checkbox]):not([type=radio]) { font-size: 16px !important; appearance: none; }
         .filter-select { font-size: 13px !important; }
         :focus-visible { outline: 2px solid var(--rosa-dark); outline-offset: 2px; border-radius: 4px; }
@@ -297,10 +303,10 @@
         <div class="page" id="page-cronograma">
             <div style="background:rgba(255,255,255,0.7);backdrop-filter:blur(12px);border-radius:var(--radius);padding:14px;margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
                 <select class="filter-select" id="cronoMes" onchange="renderCronograma()" style="min-width:110px;flex:1">
-                    <option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option>
-                    <option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option>
-                    <option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option>
-                    <option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option>
+                    <option value="1">01 - Janeiro</option><option value="2">02 - Fevereiro</option><option value="3">03 - Março</option>
+                    <option value="4">04 - Abril</option><option value="5">05 - Maio</option><option value="6">06 - Junho</option>
+                    <option value="7">07 - Julho</option><option value="8">08 - Agosto</option><option value="9">09 - Setembro</option>
+                    <option value="10">10 - Outubro</option><option value="11">11 - Novembro</option><option value="12">12 - Dezembro</option>
                 </select>
                 <select class="filter-select" id="cronoAno" onchange="renderCronograma()" style="min-width:90px"></select>
             </div>
@@ -349,6 +355,8 @@
     function getCronogramaData() { return _fbCache.cronograma_data || []; }
     function getLegislacaoData() { return _fbCache.legislacao_data || []; }
     function getFiscalizacoesData() { return _fbCache.fiscalizacoes_data || []; }
+
+    const COLOR_HEX = { red: '#e05a6b', green: '#6bcb8b', blue: '#3a7dc9' };
 
     function getStatusFor(id) {
         const r = DADOS.find(d => d.id === id);
@@ -451,7 +459,6 @@
             (r.bairro?'<span class="badge badge-bairro">'+esc(r.bairro)+'</span>':'') +
             (r.categoria?'<span class="badge badge-cat">'+esc(r.categoria)+'</span>':'') +
             riskBadge(r.classe_risco) + statusBadge(st) + licenciamentoBadge(r.licenciamento);
-        // Inclui campos de fiscalização se disponíveis
         let fiscHtml = '';
         if (r.ultimo_fiscalização) {
             fiscHtml += `<div class="info-item"><label>Data da Fiscalização</label><p>${formatDate(r.ultimo_fiscalização)}</p></div>`;
@@ -474,10 +481,15 @@
 
     function openCronoDetail(dia, mes, ano) {
         const reg = getCronogramaData().find(r => r.mes===mes && r.ano===ano && r.dia===dia) || {};
-        const topicos = (reg.topicos && reg.topicos.length) ? reg.topicos : [];
+        const topicosRaw = (reg.topicos && reg.topicos.length) ? reg.topicos : [];
+        const topicos = topicosRaw.map(t => typeof t === 'string' ? { t, c: null } : t);
         document.getElementById('detailNome').textContent = 'Cronograma';
-        document.getElementById('detailBadges').innerHTML = `<span class="badge badge-bairro">📅 ${dia}/${mes}/${ano}</span>`;
-        const topicosHtml = topicos.length ? topicos.map(t => `<p style="margin-bottom:4px">• ${esc(t)}</p>`).join('') : '<p style="color:var(--text-muted)">—</p>';
+        document.getElementById('detailBadges').innerHTML = `<span class="badge badge-bairro">📅 ${String(dia).padStart(2,'0')}/${String(mes).padStart(2,'0')}/${ano}</span>`;
+        const topicosHtml = topicos.length ? topicos.map(to => {
+            const corHex = COLOR_HEX[to.c] || '';
+            const dot = corHex ? `<span class="color-dot" style="background:${corHex}"></span>` : '';
+            return `<p style="margin-bottom:4px">${dot} ${esc(to.t)}</p>`;
+        }).join('') : '<p style="color:var(--text-muted)">—</p>';
         document.getElementById('detailInfo').innerHTML = `
             <div class="info-item full"><label>Tópicos do dia ${dia}</label>
                 <div style="margin-top:6px">${topicosHtml}</div>
@@ -501,14 +513,31 @@
         const ano = +(document.getElementById('cronoAno')?.value || new Date().getFullYear());
         const diasNoMes = new Date(ano, mes, 0).getDate();
         const dados = getCronogramaData().filter(r => r.mes===mes && r.ano===ano);
-        const mapa = {}; dados.forEach(r => mapa[r.dia]=r);
+        const mapa = {}; dados.forEach(r => {
+            const topicosNormalizados = (r.topicos || []).map(t => typeof t === 'string' ? { t, c: null } : t);
+            mapa[r.dia] = { ...r, topicos: topicosNormalizados };
+        });
+
+        const hoje = new Date();
+        const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
         let html = '';
         for (let dia=1; dia<=diasNoMes; dia++) {
+            const data = new Date(ano, mes-1, dia);
+            const diaSemana = diasSemana[data.getDay()];
+            const isToday = (dia === hoje.getDate() && mes === (hoje.getMonth()+1) && ano === hoje.getFullYear());
+
             const reg = mapa[dia] || {};
             const topicos = (reg.topicos && reg.topicos.length) ? reg.topicos : [];
-            const topicosHtml = topicos.length ? topicos.map(t => `<div style="font-size:12px;color:var(--text-light);margin-top:2px">• ${esc(t)}</div>`).join('') : '<div style="font-size:11px;color:var(--text-muted)">—</div>';
-            html += `<div class="crono-item" onclick="openCronoDetail(${dia}, ${mes}, ${ano})" style="cursor:pointer;display:flex;gap:10px;align-items:flex-start">
-                <div style="font-weight:700;font-size:14px;min-width:32px;color:var(--rosa-dark)">${dia}</div>
+            const topicosHtml = topicos.length ? topicos.map(to => {
+                const corHex = COLOR_HEX[to.c] || '';
+                const dot = corHex ? `<span class="color-dot" style="background:${corHex}"></span>` : '';
+                return `<div style="font-size:12px;color:var(--text-light);margin-top:2px">${dot} ${esc(to.t)}</div>`;
+            }).join('') : '<div style="font-size:11px;color:var(--text-muted)">—</div>';
+            html += `<div class="crono-item${isToday?' today':''}" onclick="openCronoDetail(${dia}, ${mes}, ${ano})" style="cursor:pointer;display:flex;gap:10px;align-items:flex-start">
+                <div style="font-weight:700;font-size:14px;min-width:40px;color:var(--rosa-dark)">
+                    ${String(dia).padStart(2,'0')} <span style="font-size:11px;color:var(--text-muted)">${diaSemana}</span>
+                </div>
                 <div style="flex:1;min-width:0">
                     ${topicosHtml}
                 </div>
