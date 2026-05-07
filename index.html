@@ -1736,6 +1736,7 @@
 
         const COLOR_SEQUENCE = [null, 'red', 'green', 'blue'];
         const COLOR_HEX2 = { red: '#e05a6b', green: '#6bcb8b', blue: '#3a7dc9' };
+        const COLOR_BG2  = { red: 'rgba(224,90,107,0.13)', green: 'rgba(107,203,139,0.13)', blue: 'rgba(58,125,201,0.13)' };
 
         function alternarCorTopico(btn) {
             const current = btn.dataset.color || '';
@@ -1755,12 +1756,19 @@
                 btn.style.borderStyle = 'dashed';
                 btn.classList.add('no-color');
             }
-            // atualiza o dataset do input associado também
-            const container = btn.closest('div[style*="display:flex"]');
+            // atualiza o dataset e estilo do input associado também
+            const container = btn.closest('.topico-row');
             if (container) {
                 const input = container.querySelector('.cronograma-topico');
                 if (input) {
                     input.dataset.color = newColor;
+                    if (next) {
+                        input.style.background = COLOR_BG2[next];
+                        input.style.borderLeft = `3px solid ${COLOR_HEX2[next]}`;
+                    } else {
+                        input.style.background = '';
+                        input.style.borderLeft = '';
+                    }
                 }
             }
         }
@@ -1829,8 +1837,9 @@
                     const corHex = COLOR_HEX2[cor] || '';
                     const btnColorStyle = cor ? `background:${corHex};border-color:${corHex};` : 'background:#fff;border-style:dashed;';
                     const btnClass = cor ? '' : ' no-color';
-                    topicosHtml += `<div style="display:flex;gap:8px;margin-bottom:4px;align-items:center">
-                        <input class="cronograma-editable cronograma-topico" type="text" placeholder="Descreva o tópico..." value="${esc(topico.t)}" data-dia="${dia}" data-index="${idx}" data-color="${cor}" ${disabledAttr}>
+                    const inputTopicStyle = cor ? `background:${COLOR_BG2[cor]};border-left:3px solid ${corHex};` : '';
+                    topicosHtml += `<div class="topico-row" style="display:flex;gap:8px;margin-bottom:4px;align-items:center">
+                        <input class="cronograma-editable cronograma-topico" type="text" placeholder="Descreva o tópico..." value="${esc(topico.t)}" data-dia="${dia}" data-index="${idx}" data-color="${cor}" ${disabledAttr} style="${inputTopicStyle}">
                         <button type="button" class="btn-color-topico${btnClass}" data-dia="${dia}" data-index="${idx}" data-color="${cor}" style="${btnColorStyle}" onclick="alternarCorTopico(this)" title="${cor ? 'Cor: '+cor : 'Sem cor'}" ${disabledAttr}></button>
                         ${isLast
                             ? `<button type="button" class="btn btn-sm btn-ghost cronograma-add-topico" data-dia="${dia}" style="padding:2px 8px;font-size:14px;line-height:1" onclick="addTopico(this, ${dia})" ${disabledAttr}>+</button>`
@@ -1858,6 +1867,7 @@
             }
             const newIdx = topicosDivs.length;
             const newDiv = document.createElement('div');
+            newDiv.className = 'topico-row';
             newDiv.style.cssText = 'display:flex;gap:8px;margin-bottom:4px;align-items:center';
             newDiv.innerHTML = `<input class="cronograma-editable cronograma-topico" type="text" placeholder="Descreva o tópico..." value="" data-dia="${dia}" data-index="${newIdx}" data-color="">
                 <button type="button" class="btn-color-topico no-color" data-dia="${dia}" data-index="${newIdx}" data-color="" style="background:#fff;border-style:dashed;" onclick="alternarCorTopico(this)" title="Sem cor"></button>
