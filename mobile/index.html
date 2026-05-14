@@ -55,7 +55,7 @@
             user-select: none; -webkit-user-select: none;
         }
         input, textarea, select, [contenteditable] { user-select: text !important; -webkit-user-select: text !important; }
-        html { overscroll-behavior-y: none; height: 100%; }
+        html { overscroll-behavior-y: auto; height: 100%; }
         body {
             font-family: 'DM Sans', sans-serif;
             background: var(--bg);
@@ -64,7 +64,7 @@
                               radial-gradient(circle at 60% 10%,  rgba(244,138,171,0.2) 0%, transparent 40%);
             background-attachment: fixed;
             color: var(--text); min-height: 100vh; overflow-x: hidden;
-            overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: auto; -webkit-tap-highlight-color: transparent; -webkit-overflow-scrolling: touch;
         }
         .topbar {
             position: sticky; top: 0; z-index: 100;
