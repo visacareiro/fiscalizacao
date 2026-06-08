@@ -454,7 +454,6 @@
         <div class="nav-section">Fiscalização</div>
         <button class="nav-item" data-page="cronograma" onclick="navigate('cronograma')"><span class="icon">📅</span> Cronograma Mensal</button>
         <button class="nav-item" data-page="legislacao" onclick="navigate('legislacao')"><span class="icon">📚</span> Legislação</button>
-        <!-- Botão Fiscalização removido -->
         <div class="nav-section">Sistema</div>
         <button class="nav-item" data-page="configuracoes" onclick="navigate('configuracoes')"><span class="icon">⚙️</span> Configurações</button>
 
@@ -623,8 +622,6 @@
                 </div>
             </div>
 
-            <!-- Página Fiscalização removida -->
-
             <div class="page" id="page-configuracoes">
                 <div class="config-sections">
                     <div class="config-card">
@@ -657,6 +654,36 @@
                         <input type="file" id="importFile" accept=".json" style="display:none" onchange="doImport(event)">
                         <div id="backupImportResult" style="display:none;margin-top:16px;padding:14px 16px;border-radius:var(--radius-sm);font-size:13px;line-height:1.7"></div>
                         <div style="margin-top:14px;font-size:13px;color:var(--text-muted)" id="configStats"></div>
+                    </div>
+
+                    <div class="config-card">
+                        <h3>🔍 Validação de CPF/CNPJ</h3>
+                        <p>Controle se o campo CPF/CNPJ é obrigatório e validado no cadastro de estabelecimentos.</p>
+                        <div class="switch-row">
+                            <div>
+                                <div class="switch-label">CPF/CNPJ obrigatório</div>
+                                <div class="switch-sub">Exige CPF ou CNPJ válido para salvar</div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="switchCpfObrigatorio" onchange="handleSwitchChange(this, 'cpfObrigatorio')">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="config-card">
+                        <h3>🗑️ Exclusão de Inativos</h3>
+                        <p>Permite excluir permanentemente estabelecimentos desativados. <strong>Atenção:</strong> essa ação é irreversível.</p>
+                        <div class="switch-row">
+                            <div>
+                                <div class="switch-label">Permitir exclusão permanente</div>
+                                <div class="switch-sub">Habilita opção de exclusão definitiva na aba de Inativos</div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="switchPermitirExclusao" onchange="handleSwitchChange(this, 'permitirExclusao')">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
                     </div>
 
                     <div class="config-card">
@@ -697,7 +724,7 @@
             <div class="modal-body">
                 <div class="inspect-form">
                     <div class="form-row"><div class="form-group"><label>Nome Fantasia *</label><input class="form-input" id="estNome" placeholder="Ex: MERCADINHO BOA SORTE"></div><div class="form-group"><label>Razão social/ proprietário *</label><input class="form-input" id="estRazao" placeholder="Ex: JOÃO DA SILVA ME"></div></div>
-                    <div class="form-row"><div class="form-group"><label>CPF/CNPJ *</label><input class="form-input" id="estCpfCnpj" placeholder="Ex: 000.000.000-00 ou 00.000.000/0001-00"></div><div class="form-group"><label>Licenciamento *</label><select class="form-select" id="estLicenciamento"><option value="">Selecionar...</option><option value="Sim">Sim</option><option value="Não">Não</option></select></div></div>
+                    <div class="form-row"><div class="form-group"><label>CPF/CNPJ <span id="cpfLabelObrigatorio" style="color:var(--danger)">*</span></label><input class="form-input" id="estCpfCnpj" placeholder="Ex: 000.000.000-00 ou 00.000.000/0001-00"></div><div class="form-group"><label>Licenciamento *</label><select class="form-select" id="estLicenciamento"><option value="">Selecionar...</option><option value="Sim">Sim</option><option value="Não">Não</option></select></div></div>
                     <div class="form-row"><div class="form-group"><label>Endereço *</label><input class="form-input" id="estEndereco" placeholder="Ex: RUA DAS FLORES Nº 12"></div><div class="form-group"><label>Localidade *</label><select class="form-select" id="estBairro"><option value="">Selecionar...</option></select></div></div>
                     <div class="form-row"><div class="form-group"><label>Categoria *</label><input class="form-input" id="estCategoria" list="catList" placeholder="Ex: MERCADINHO"><datalist id="catList"></datalist></div><div class="form-group"><label>Tipo de Atividade *</label><input class="form-input" id="estAtividade" placeholder="Ex: VENDA DE ESTIVAS EM GERAL"></div></div>
                     <div class="form-row"><div class="form-group"><label>CNAE *</label><input class="form-input" id="estCnae" placeholder="Ex: 4712-1/00"></div><div class="form-group"><label>Classe de Risco *</label><select class="form-select" id="estRisco"><option value="">Selecionar...</option><option value="BAIXO RISCO">Baixo Risco</option><option value="ALTO RISCO">Alto Risco</option></select></div></div>
@@ -776,6 +803,42 @@
         </div>
     </div>
 
+    <div class="overlay" id="modalPasswordPrompt">
+        <div class="modal" style="max-width:400px">
+            <div class="modal-header">
+                <h2>🔐 Verificação de Senha</h2>
+                <button class="modal-close" onclick="closeModal('modalPasswordPrompt');cancelPasswordAction()">✕</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size:14px;margin-bottom:12px;color:var(--text)">Digite sua senha administrativa para confirmar a alteração.</p>
+                <input type="password" class="form-input" id="promptPasswordInput" placeholder="Senha" autocomplete="current-password" onkeydown="if(event.key==='Enter')confirmPasswordAction()">
+                <div id="promptPasswordError" style="display:none;color:var(--danger);font-size:13px;margin-top:8px"></div>
+                <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
+                    <button class="btn btn-ghost" onclick="cancelPasswordAction()">Cancelar</button>
+                    <button class="btn btn-primary" id="btnPromptPasswordConfirm" onclick="confirmPasswordAction()">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="modalConfirmPermanentDelete">
+        <div class="modal" style="max-width:420px">
+            <div class="modal-header" style="background:var(--danger-bg)">
+                <h2 style="color:var(--danger)">⚠️ Exclusão Permanente</h2>
+                <button class="modal-close" onclick="closeModal('modalConfirmPermanentDelete')">✕</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size:15px;margin-bottom:6px">Tem certeza que deseja <strong>excluir permanentemente</strong>:</p>
+                <p style="font-weight:700;font-size:16px;color:var(--text);margin-bottom:16px" id="permanentDeleteNomeLabel">—</p>
+                <p style="font-size:13px;color:var(--danger);margin-bottom:22px">Esta ação é <strong>irreversível</strong>. O estabelecimento será removido de todos os registros do sistema.</p>
+                <div style="display:flex;gap:10px;justify-content:flex-end">
+                    <button class="btn btn-ghost" onclick="closeModal('modalConfirmPermanentDelete')">Cancelar</button>
+                    <button class="btn btn-danger" onclick="confirmPermanentDelete()">🗑️ Excluir permanentemente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
@@ -799,7 +862,7 @@
         const _fbCache = {
             inspections: {},
             agents: [],
-            config: { licenca: true, semFisc: true },
+            config: { licenca: true, semFisc: true, cpfObrigatorio: true, permitirExclusaoInativos: false },
             custom: [],
             deleted: [],
             disabled: [],
@@ -944,12 +1007,18 @@
             document.getElementById('topbarTitle').textContent = titles[pg] || pg;
             closeSidebar();
             if (pg === 'dashboard') renderDashboard();
-            if (pg === 'estabelecimentos') renderTable();
+            if (pg === 'estabelecimentos') { renderTable(); updateCpfLabel(); }
             if (pg === 'inativos') renderInativos();
             if (pg === 'cronograma') renderCronograma();
             if (pg === 'legislacao') renderLegislacao();
-            // Página fiscalização removida
             if (pg === 'configuracoes') renderConfig();
+        }
+
+        function updateCpfLabel() {
+            const label = document.getElementById('cpfLabelObrigatorio');
+            if (label) {
+                label.textContent = getConfig().cpfObrigatorio !== false ? '*' : '';
+            }
         }
 
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
@@ -1086,6 +1155,8 @@
             const countEl = document.getElementById('inativosCount');
             if (countEl) countEl.textContent = total + ' resultado' + (total !== 1 ? 's' : '');
             const tbody = document.getElementById('inativosTableBody');
+            const podeExcluir = getConfig().permitirExclusaoInativos === true;
+
             if (!slice.length) {
                 tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><div class="icon">🚫</div><h3>Nenhum estabelecimento inativo</h3><p>Todos os estabelecimentos estão ativos.</p></div></td></tr>`;
             } else {
@@ -1098,7 +1169,7 @@
       <td>${riskBadge(r.classe_risco)}</td>
       <td>${licenciamentoBadge(r.licenciamento)}</td>
       <td><span class="badge badge-inativo">🚫 Inativo</span></td>
-      <td><div class="td-actions"><button class="action-btn view" onclick="openDetail(${r.id})" title="Ver detalhes">👁️</button><button class="action-btn activate" onclick="toggleEstab(${r.id})" title="Ativar estabelecimento">✅</button><button class="action-btn edit" onclick="openEdit(${r.id})" title="Editar">✏️</button></div></td>
+      <td><div class="td-actions"><button class="action-btn view" onclick="openDetail(${r.id})" title="Ver detalhes">👁️</button><button class="action-btn activate" onclick="toggleEstab(${r.id})" title="Ativar estabelecimento">✅</button><button class="action-btn edit" onclick="openEdit(${r.id})" title="Editar">✏️</button>${podeExcluir ? `<button class="action-btn del" onclick="requestPermanentDelete(${r.id})" title="Excluir permanentemente">🗑️</button>` : ''}</div></td>
     </tr>`).join('');
             }
             const from = total === 0 ? 0 : (currentInativosPage - 1) * PAGE_SIZE + 1;
@@ -1344,7 +1415,85 @@
             openModal('printPreviewModal');
         }
 
-        function renderConfig() { renderBairroTags(); updateConfigStats(); }
+        function renderConfig() { renderBairroTags(); updateConfigStats(); initConfigSwitches(); }
+        function initConfigSwitches() {
+            const switchCpf = document.getElementById('switchCpfObrigatorio');
+            const switchExclusao = document.getElementById('switchPermitirExclusao');
+            if (switchCpf) switchCpf.checked = getConfig().cpfObrigatorio !== false;
+            if (switchExclusao) switchExclusao.checked = getConfig().permitirExclusaoInativos === true;
+        }
+
+        let _pendingPasswordCallback = null;
+
+        async function verifyAdminPassword(password) {
+            try {
+                const doc = await _USERS_REF.doc(_currentUser.uid).get();
+                return doc.exists && doc.data().senha === password;
+            } catch (e) {
+                console.error('Erro ao verificar senha:', e);
+                return false;
+            }
+        }
+
+        function promptAdminPassword(successCallback, cancelCallback) {
+            _pendingPasswordCallback = { success: successCallback, cancel: cancelCallback || (() => {}) };
+            const input = document.getElementById('promptPasswordInput');
+            const errorEl = document.getElementById('promptPasswordError');
+            if (input) input.value = '';
+            if (errorEl) errorEl.style.display = 'none';
+            openModal('modalPasswordPrompt');
+            setTimeout(() => document.getElementById('promptPasswordInput')?.focus(), 100);
+        }
+
+        async function confirmPasswordAction() {
+            const password = document.getElementById('promptPasswordInput')?.value || '';
+            if (!password) {
+                const errorEl = document.getElementById('promptPasswordError');
+                if (errorEl) { errorEl.textContent = 'Digite a senha.'; errorEl.style.display = 'block'; }
+                return;
+            }
+
+            const isValid = await verifyAdminPassword(password);
+            if (isValid) {
+                closeModal('modalPasswordPrompt');
+                const cb = _pendingPasswordCallback?.success;
+                _pendingPasswordCallback = null;
+                if (cb) cb();
+            } else {
+                const errorEl = document.getElementById('promptPasswordError');
+                if (errorEl) { errorEl.textContent = 'Senha incorreta.'; errorEl.style.display = 'block'; }
+            }
+        }
+
+        function cancelPasswordAction() {
+            closeModal('modalPasswordPrompt');
+            const cb = _pendingPasswordCallback?.cancel;
+            _pendingPasswordCallback = null;
+            if (cb) cb();
+        }
+
+        function handleSwitchChange(switchEl, configKey) {
+            const newValue = switchEl.checked;
+            switchEl.checked = !newValue;
+
+            promptAdminPassword(
+                () => {
+                    switchEl.checked = newValue;
+                    if (configKey === 'cpfObrigatorio') {
+                        _fbCache.config.cpfObrigatorio = newValue;
+                        _saveField('config', _fbCache.config);
+                        updateCpfLabel();
+                        showToast(newValue ? 'CPF/CNPJ agora é obrigatório.' : 'CPF/CNPJ não é mais obrigatório.', 'success');
+                    } else if (configKey === 'permitirExclusao') {
+                        _fbCache.config.permitirExclusaoInativos = newValue;
+                        _saveField('config', _fbCache.config);
+                        showToast(newValue ? 'Exclusão permanente habilitada.' : 'Exclusão permanente desabilitada.', 'success');
+                        if (currentPage === 'inativos') renderInativos();
+                    }
+                },
+                () => {}
+            );
+        }
 
         function refreshAllBairroDropdowns() {
             const bairros = getBairros().slice().sort((a, b) => a.localeCompare(b));
@@ -1507,8 +1656,7 @@
             if (currentPage === 'dashboard') renderDashboard();
             if (currentPage === 'cronograma') renderCronograma();
             if (currentPage === 'legislacao') renderLegislacao();
-            // Página fiscalização removida
-            if (currentPage === 'configuracoes') updateConfigStats();
+            if (currentPage === 'configuracoes') { renderConfig(); updateCpfLabel(); }
         }
 
         function openAdd() {
@@ -1520,6 +1668,7 @@
             if (cpfCnpjEl) {
                 cpfCnpjEl.classList.remove('valid', 'invalid');
             }
+            updateCpfLabel();
             openModal('modalEstab');
         }
         let currentEditId = null;
@@ -1550,6 +1699,7 @@
             } else if (cpfCnpjEl) {
                 cpfCnpjEl.classList.remove('valid', 'invalid');
             }
+            updateCpfLabel();
             openModal('modalEstab');
         }
 
@@ -1652,20 +1802,25 @@
 
             if (!nome) { showToast('Informe o Nome Fantasia!', 'error'); return; }
             if (!razao) { showToast('Informe a Razão social/ proprietário!', 'error'); return; }
-            if (!cpfCnpj) { showToast('Informe o CPF/CNPJ!', 'error'); return; }
-            const cpfCnpjClean = cpfCnpj.replace(/\D/g, '');
-            if (cpfCnpjClean.length !== 11 && cpfCnpjClean.length !== 14) {
-                showToast('CPF deve ter 11 dígitos ou CNPJ 14 dígitos!', 'error');
-                return;
+
+            const cpfObrigatorio = getConfig().cpfObrigatorio !== false;
+            if (cpfObrigatorio) {
+                if (!cpfCnpj) { showToast('Informe o CPF/CNPJ!', 'error'); return; }
+                const cpfCnpjClean = cpfCnpj.replace(/\D/g, '');
+                if (cpfCnpjClean.length !== 11 && cpfCnpjClean.length !== 14) {
+                    showToast('CPF deve ter 11 dígitos ou CNPJ 14 dígitos!', 'error');
+                    return;
+                }
+                if (cpfCnpjClean.length === 11 && !validarCPF(cpfCnpjClean)) {
+                    showToast('CPF inválido! Verifique os dígitos.', 'error');
+                    return;
+                }
+                if (cpfCnpjClean.length === 14 && !validarCNPJ(cpfCnpjClean)) {
+                    showToast('CNPJ inválido! Verifique os dígitos.', 'error');
+                    return;
+                }
             }
-            if (cpfCnpjClean.length === 11 && !validarCPF(cpfCnpjClean)) {
-                showToast('CPF inválido! Verifique os dígitos.', 'error');
-                return;
-            }
-            if (cpfCnpjClean.length === 14 && !validarCNPJ(cpfCnpjClean)) {
-                showToast('CNPJ inválido! Verifique os dígitos.', 'error');
-                return;
-            }
+
             if (!licenciamento) { showToast('Selecione o Licenciamento!', 'error'); return; }
             if (!endereco) { showToast('Informe o Endereço!', 'error'); return; }
             if (!bairro) { showToast('Selecione a Localidade!', 'error'); return; }
@@ -1756,7 +1911,6 @@
                 btn.style.borderStyle = 'dashed';
                 btn.classList.add('no-color');
             }
-            // atualiza o dataset e estilo do input associado também
             const container = btn.closest('.topico-row');
             if (container) {
                 const input = container.querySelector('.cronograma-topico');
@@ -1798,7 +1952,6 @@
             const registrosDoMes = cronograma.filter(r => r.mes === mes && r.ano === ano);
             const mapa = {};
             registrosDoMes.forEach(r => {
-                // normaliza topicos antigos (strings) para objetos {t, c}
                 const topicosNormalizados = (r.topicos || []).map(t => {
                     if (typeof t === 'string') return { t, c: null };
                     return t;
@@ -1978,8 +2131,6 @@
             showToast('Documento removido.', 'success');
         }
 
-        // Funções renderFiscalizacoes e imprimirFiscalizacoes removidas
-
         async function doLogin() {
             const email = document.getElementById('loginEmail').value.trim().toLowerCase();
             const senha = document.getElementById('loginSenha').value;
@@ -2103,8 +2254,50 @@
             refreshAllBairroDropdowns();
             initCatDatalist();
             updateTopBadges();
+            updateCpfLabel();
             renderDashboard();
         }
+
+        let _pendingPermanentDeleteId = null;
+
+        function requestPermanentDelete(id) {
+            const r = DADOS.find(d => d.id === id);
+            if (!r) return;
+            _pendingPermanentDeleteId = id;
+            document.getElementById('permanentDeleteNomeLabel').textContent = r.nome_fantasia;
+            openModal('modalConfirmPermanentDelete');
+        }
+
+        async function confirmPermanentDelete() {
+            const id = _pendingPermanentDeleteId;
+            if (id === null) return;
+            _pendingPermanentDeleteId = null;
+            closeModal('modalConfirmPermanentDelete');
+
+            try {
+                const custom = getCustom().filter(c => String(c.id) !== String(id));
+                saveCustom(custom);
+
+                const edited = getEditedMap();
+                delete edited[String(id)];
+                saveEditedMap(edited);
+
+                const disabled = getDisabledIds().filter(d => String(d) !== String(id));
+                saveDisabledIds(disabled);
+
+                const inativos = getInativosData().filter(x => String(x.id) !== String(id));
+                await saveInativosData(inativos);
+
+                _DADOS_ORIGINAL = _DADOS_ORIGINAL.filter(r => String(r.id) !== String(id));
+
+                rebuildDADOS();
+                showToast('Estabelecimento excluído permanentemente.', 'success');
+                refreshAfterChange();
+            } catch (e) {
+                showToast('Erro ao excluir: ' + e.message, 'error');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const skipIds = new Set(['estCnae', 'estLicenca', 'loginEmail', 'loginSenha', 'legLink', 'estFiscDescricao']);
 
