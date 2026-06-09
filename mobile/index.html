@@ -359,12 +359,11 @@
     const COLOR_HEX = { red: '#e05a6b', green: '#6bcb8b', blue: '#3a7dc9' };
     const COLOR_BG  = { red: 'rgba(224,90,107,0.13)', green: 'rgba(107,203,139,0.13)', blue: 'rgba(58,125,201,0.13)' };
 
-    function getStatusFor(id) {
-        const r = DADOS.find(d => d.id === id);
-        if (!r || !r.ultimo_licenciamento) return 'pendente';
-        const licDate = new Date(r.ultimo_licenciamento + 'T00:00:00');
-        if (isNaN(licDate.getTime())) return 'pendente';
-        const expiry = new Date(licDate); expiry.setMonth(expiry.getMonth() + 4);
+    function getStatusFor(r) {
+        if (!r || !r.ultimo_fiscalização) return 'pendente';
+        const fiscDate = new Date(r.ultimo_fiscalização + 'T00:00:00');
+        if (isNaN(fiscDate.getTime())) return 'pendente';
+        const expiry = new Date(fiscDate); expiry.setMonth(expiry.getMonth() + 4);
         const now = new Date(); now.setHours(0,0,0,0);
         return now <= expiry ? 'fiscalizado' : 'pendente';
     }
@@ -423,7 +422,7 @@
             container.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><h3>Nenhum resultado</h3><p>Tente outros termos ou filtros.</p></div>';
         } else {
             container.innerHTML = slice.map(r => {
-                const st = getStatusFor(r.id);
+                const st = getStatusFor(r);
                 return `<div class="estab-card" onclick="openEstabDetail(${r.id})">
                     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
                         <div style="flex:1;min-width:0"><div class="estab-card-nome">${esc(r.nome_fantasia)}</div><div class="estab-card-razao">${esc(r.razao_social)||'—'}</div></div>
@@ -454,7 +453,7 @@
 
     function openEstabDetail(id) {
         const r = DADOS.find(d => d.id === id); if (!r) return;
-        const st = getStatusFor(id);
+        const st = getStatusFor(r);
         document.getElementById('detailNome').textContent = r.nome_fantasia;
         document.getElementById('detailBadges').innerHTML =
             (r.bairro?'<span class="badge badge-bairro">'+esc(r.bairro)+'</span>':'') +
