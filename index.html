@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1280">
-    <title>VISA Careiro — Cadastro Sanitário</title>
+    <title>CADVISA — Cadastro Sanitário</title>
 
     <link rel="icon" type="image/jpeg" href="imag01.jpeg">
     <link rel="shortcut icon" type="image/jpeg" href="imag01.jpeg">
@@ -11,13 +11,13 @@
     <meta name="theme-color" content="#f48aab">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="VISA Careiro">
+    <meta name="apple-mobile-web-app-title" content="CADVISA">
     <link rel="manifest" id="__manifest__">
     <script>
         (function() {
             const m = {
-                name: "VISA Careiro — Cadastro Sanitário",
-                short_name: "VISA Careiro",
+                name: "CADVISA — Cadastro Sanitário",
+                short_name: "CADVISA",
                 start_url: "./",
                 display: "standalone",
                 background_color: "#f5e8ef",
@@ -404,8 +404,8 @@
     <div id="loginOverlay">
         <div class="login-card">
             <div class="login-logo">
-                <div class="logo-icon"><img src="imag01.jpeg" alt="VISA" onerror="this.parentElement.textContent='🏥'"></div>
-                <h2>VISA Careiro</h2>
+                <div class="logo-icon"><img src="imag01.jpeg" alt="CADVISA" onerror="this.parentElement.textContent='🏥'"></div>
+                <h2>CADVISA</h2>
                 <p>Cadastro Sanitário Municipal — Acesso Administrativo</p>
             </div>
             <div class="login-err" id="loginErr"></div>
@@ -424,8 +424,8 @@
     </div>
 
     <div id="loadingOverlay" style="display:none;position:fixed;inset:0;background:rgba(245,232,239,.96);z-index:9000;flex-direction:column;align-items:center;justify-content:center;gap:16px">
-        <div style="width:72px;height:72px;border-radius:22px;overflow:hidden;box-shadow:0 6px 24px rgba(244,138,171,0.35)"><img src="imag01.jpeg" alt="VISA" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='🏥';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.style.fontSize='44px'"></div>
-        <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700">VISA Careiro</div>
+        <div style="width:72px;height:72px;border-radius:22px;overflow:hidden;box-shadow:0 6px 24px rgba(244,138,171,0.35)"><img src="imag01.jpeg" alt="CADVISA" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='🏥';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';this.parentElement.style.fontSize='44px'"></div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700">CADVISA</div>
         <div style="font-size:13px;color:var(--text-muted)">Carregando dados da nuvem…</div>
         <div style="width:200px;height:6px;background:rgba(249,184,200,0.4);border-radius:50px;overflow:hidden;margin-top:4px">
             <div style="height:100%;width:60%;background:var(--rosa-dark);border-radius:50px;animation:shimmer 1.5s infinite;background-size:200% 100%"></div>
@@ -434,8 +434,8 @@
 
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">
-            <div class="logo-icon"><img src="imag01.jpeg" alt="VISA Logo" onerror="this.parentElement.textContent='🏥'"></div>
-            <h1>VISA Careiro</h1>
+            <div class="logo-icon"><img src="imag01.jpeg" alt="CADVISA Logo" onerror="this.parentElement.textContent='🏥'"></div>
+            <h1>CADVISA</h1>
             <p>Cadastro Sanitário Municipal</p>
         </div>
 
@@ -773,7 +773,7 @@
                 <p style="font-size:12px;color:var(--text-muted);margin-top:4px">Você precisa aceitar os termos para continuar</p>
             </div>
             <div class="modal-body" style="text-align:left">
-                <p style="font-size:13px;color:var(--text-light);margin-bottom:16px">Antes de acessar o sistema <strong>VISA Careiro</strong>, leia atentamente os documentos abaixo. Ao clicar em <strong>&ldquo;Li e aceito&rdquo;</strong>, você declara que leu, compreendeu e concorda integralmente com ambos.</p>
+                <p style="font-size:13px;color:var(--text-light);margin-bottom:16px">Antes de acessar o sistema <strong>CADVISA</strong>, leia atentamente os documentos abaixo. Ao clicar em <strong>&ldquo;Li e aceito&rdquo;</strong>, você declara que leu, compreendeu e concorda integralmente com ambos.</p>
 
                 <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
                     <a href="termo-de-uso.html" target="_blank" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,0.75);border:1.5px solid var(--border-solid);border-radius:var(--radius-sm);text-decoration:none;color:var(--text);transition:all .2s">
@@ -798,7 +798,7 @@
                     <button class="btn btn-primary" onclick="aceitarTermos()" style="min-width:160px">✅ Li e aceito</button>
                     <button class="btn btn-danger" onclick="rejeitarTermos()" style="min-width:160px">❌ Rejeito e sair</button>
                 </div>
-                <p style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:14px">Ao aceitar, você concorda com o <strong>Termo de Uso</strong> e a <strong>Política de Privacidade</strong> do sistema VISA Careiro.</p>
+                <p style="font-size:10px;color:var(--text-muted);text-align:center;margin-top:14px">Ao aceitar, você concorda com o <strong>Termo de Uso</strong> e a <strong>Política de Privacidade</strong> do sistema CADVISA.</p>
             </div>
         </div>
     </div>
@@ -1009,7 +1009,12 @@
             if (pg === 'dashboard') renderDashboard();
             if (pg === 'estabelecimentos') { renderTable(); updateCpfLabel(); }
             if (pg === 'inativos') renderInativos();
-            if (pg === 'cronograma') renderCronograma();
+            if (pg === 'cronograma') {
+                const hoje = new Date();
+                document.getElementById('cronogramaMes').value = hoje.getMonth() + 1;
+                document.getElementById('cronogramaAno').value = hoje.getFullYear();
+                renderCronograma();
+            }
             if (pg === 'legislacao') renderLegislacao();
             if (pg === 'configuracoes') renderConfig();
         }
@@ -1320,7 +1325,7 @@
                 return `<tr><td style="text-align:center;font-weight:600">${i+1}</td><td style="font-weight:600">${esc(r.nome_fantasia)}</td><td style="font-size:11px;color:#555">${esc(r.razao_social)||'&mdash;'}</td><td style="font-size:11px;color:#555">${esc(r.cpf_cnpj)||'&mdash;'}</td><td style="font-size:11px;color:#555;max-width:120px">${esc(r.endereco)||'&mdash;'}</td><td>${esc(r.bairro)||'&mdash;'}</td><td style="font-size:11px">${esc(r.categoria)||'&mdash;'}</td><td style="font-size:10px;color:#555;max-width:110px">${esc(r.tipo_atividade)||'&mdash;'}</td><td style="font-size:10px">${esc(r.cnae)||'&mdash;'}</td><td style="font-size:11px">${r.classe_risco?.includes('BAIXO')?'Baixo':r.classe_risco?.includes('ALTO')?'Alto':'&mdash;'}</td><td style="font-size:10px;color:#555">${esc(r.orgao_licenciador)||'&mdash;'}</td><td style="font-size:11px">${r.ultimo_fiscalização?formatDate(r.ultimo_fiscalização):'&mdash;'}</td><td style="font-size:10px">${esc(r.licenciamento)||'&mdash;'}</td><td><span style="display:inline-block;padding:2px 8px;border-radius:50px;font-size:10px;font-weight:700;background:${stBg};color:${stColor}">${stTxt}</span></td></tr>`;
             }).join('');
 
-            const html = `<div class="print-header"><div><div style="font-size:12px;opacity:.85;margin-bottom:4px;letter-spacing:1px;text-transform:uppercase">Prefeitura Municipal de Careiro — AM</div><h1>VISA Careiro</h1><div style="font-size:13px;opacity:.9;margin-top:4px">Vigilância Sanitária — Lista de Estabelecimentos</div></div><div class="print-meta"><div><strong>Data:</strong> ${dateStr} &nbsp;|&nbsp; <strong>Hora:</strong> ${timeStr}</div></div></div><div class="print-body"><div style="background:#f9f9f9;border:1px solid #eee;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:12px;color:#555"><strong style="color:#333">Filtros:</strong> Localidade: <strong>${bairroAtivo}</strong> | Categoria: <strong>${catAtiva}</strong> | Risco: <strong>${riscoAtivo}</strong> | Status: <strong>${statusAtivo}</strong> | Data: <strong>${dataInicio} a ${dataFim}</strong></div><div class="print-section-title">📊 Resumo</div><div class="print-summary"><div class="print-stat"><div class="pv">${data.length}</div><div class="pl">Total</div></div><div class="print-stat"><div class="pv" style="color:#2a6e47">${cFisc}</div><div class="pl">Fiscalizados</div></div><div class="print-stat"><div class="pv" style="color:#7a4e00">${cPend}</div><div class="pl">Pendentes</div></div></div><div class="print-section-title">🏪 Estabelecimentos</div><table><thead><tr><th style="width:28px">#</th><th>Nome Fantasia</th><th>Razão social/ proprietário</th><th>CPF/CNPJ</th><th>Endereço</th><th>Localidade</th><th>Categoria</th><th>Tipo Atividade</th><th>CNAE</th><th>Risco</th><th>Órgão Lic.</th><th>Fiscalização</th><th>Licenciamento</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table><div class="print-footer"><div><div style="font-size:12px;color:#555;margin-bottom:32px">Responsável pela Emissão:</div><div class="sign-line">Chefe da Vigilância Sanitária Municipal</div></div><div><div style="font-size:12px;color:#555;margin-bottom:32px">Fiscal Responsável:</div><div class="sign-line">${esc(_currentUser?.profile?.nome || 'Fiscal Sanitário')}</div></div></div><div style="margin-top:16px;padding:8px 12px;background:#f9f9f9;border-radius:6px;font-size:9px;color:#888;text-align:center">VISA Careiro — ${dateStr} às ${timeStr} — ${data.length} estabelecimentos</div></div>`;
+            const html = `<div class="print-header"><div><div style="font-size:12px;opacity:.85;margin-bottom:4px;letter-spacing:1px;text-transform:uppercase">Prefeitura Municipal de Careiro — AM</div><h1>CADVISA</h1><div style="font-size:13px;opacity:.9;margin-top:4px">Vigilância Sanitária — Lista de Estabelecimentos</div></div><div class="print-meta"><div><strong>Data:</strong> ${dateStr} &nbsp;|&nbsp; <strong>Hora:</strong> ${timeStr}</div></div></div><div class="print-body"><div style="background:#f9f9f9;border:1px solid #eee;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:12px;color:#555"><strong style="color:#333">Filtros:</strong> Localidade: <strong>${bairroAtivo}</strong> | Categoria: <strong>${catAtiva}</strong> | Risco: <strong>${riscoAtivo}</strong> | Status: <strong>${statusAtivo}</strong> | Data: <strong>${dataInicio} a ${dataFim}</strong></div><div class="print-section-title">📊 Resumo</div><div class="print-summary"><div class="print-stat"><div class="pv">${data.length}</div><div class="pl">Total</div></div><div class="print-stat"><div class="pv" style="color:#2a6e47">${cFisc}</div><div class="pl">Fiscalizados</div></div><div class="print-stat"><div class="pv" style="color:#7a4e00">${cPend}</div><div class="pl">Pendentes</div></div></div><div class="print-section-title">🏪 Estabelecimentos</div><table><thead><tr><th style="width:28px">#</th><th>Nome Fantasia</th><th>Razão social/ proprietário</th><th>CPF/CNPJ</th><th>Endereço</th><th>Localidade</th><th>Categoria</th><th>Tipo Atividade</th><th>CNAE</th><th>Risco</th><th>Órgão Lic.</th><th>Fiscalização</th><th>Licenciamento</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table><div class="print-footer"><div><div style="font-size:12px;color:#555;margin-bottom:32px">Responsável pela Emissão:</div><div class="sign-line">Chefe da Vigilância Sanitária Municipal</div></div><div><div style="font-size:12px;color:#555;margin-bottom:32px">Fiscal Responsável:</div><div class="sign-line">${esc(_currentUser?.profile?.nome || 'Fiscal Sanitário')}</div></div></div><div style="margin-top:16px;padding:8px 12px;background:#f9f9f9;border-radius:6px;font-size:9px;color:#888;text-align:center">CADVISA — ${dateStr} às ${timeStr} — ${data.length} estabelecimentos</div></div>`;
             document.getElementById('printModalTitle').textContent = '🖨️ Lista de Estabelecimentos';
             document.getElementById('printModalSub').textContent = data.length + ' estabelecimentos';
             document.getElementById('printContent').innerHTML = html;
@@ -1330,7 +1335,7 @@
         function executarImpressao() {
             const content = document.getElementById('printContent').innerHTML;
             const printWin = window.open('', '_blank', 'width=1200,height=800,menubar=no,toolbar=no,scrollbars=yes');
-            printWin.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>VISA Careiro</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"><style>${_printStyles()}</style></head><body><div>${content}</div><script>window.onload=function(){window.print();window.onfocus=function(){window.close();};};<\/script></body></html>`);
+            printWin.document.write(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>CADVISA</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"><style>${_printStyles()}</style></head><body><div>${content}</div><script>window.onload=function(){window.print();window.onfocus=function(){window.close();};};<\/script></body></html>`);
             printWin.document.close();
             closeModal('printPreviewModal');
         }
@@ -1384,7 +1389,7 @@
                 <div class="print-header">
                     <div>
                         <div style="font-size:12px;opacity:.85;margin-bottom:4px;letter-spacing:1px;text-transform:uppercase">Prefeitura Municipal de Careiro — AM</div>
-                        <h1>VISA Careiro</h1>
+                        <h1>CADVISA</h1>
                         <div style="font-size:13px;opacity:.9;margin-top:4px">Vigilância Sanitária — Cronograma de Fiscalização</div>
                     </div>
                     <div class="print-meta"><div><strong>Data:</strong> ${dateStr} &nbsp;|&nbsp; <strong>Hora:</strong> ${timeStr}</div></div>
@@ -1406,7 +1411,7 @@
                         <div><div style="font-size:12px;color:#555;margin-bottom:32px">Responsável pela Programação:</div><div class="sign-line">Chefe da Vigilância Sanitária Municipal</div></div>
                         <div><div style="font-size:12px;color:#555;margin-bottom:32px">Fiscal Responsável:</div><div class="sign-line">${esc(_currentUser?.profile?.nome || 'Fiscal Sanitário')}</div></div>
                     </div>
-                    <div style="margin-top:16px;padding:8px 12px;background:#f9f9f9;border-radius:6px;font-size:9px;color:#888;text-align:center">VISA Careiro — ${dateStr} às ${timeStr} — ${nomeMes}/${ano}</div>
+                    <div style="margin-top:16px;padding:8px 12px;background:#f9f9f9;border-radius:6px;font-size:9px;color:#888;text-align:center">CADVISA — ${dateStr} às ${timeStr} — ${nomeMes}/${ano}</div>
                 </div>`;
 
             document.getElementById('printModalTitle').textContent = '🖨️ Cronograma Mensal';
@@ -1578,7 +1583,7 @@
             const baseAtivos = _DADOS_ORIGINAL.filter(r => !disabledSet.has(String(r.id)));
             const inativos = getInativosData();
             const data = { version: 5, exportedAt: new Date().toISOString(), config: getConfig(), custom: getCustom(), deleted: getDeletedIds(), disabled: getDisabledIds(), edited: getEditedMap(), bairros: getBairros(), estabelecimentos: baseAtivos, inativos_data: inativos, cronograma_data: getCronogramaData(), legislacao_data: getLegislacaoData(), fiscalizacoes_data: getFiscalizacoesData() };
-            downloadJSON(data, 'backup_completo_visa_careiro_' + new Date().toISOString().slice(0, 10) + '.json');
+            downloadJSON(data, 'backup_completo_cadvista_' + new Date().toISOString().slice(0, 10) + '.json');
             showToast('Backup completo exportado! ✅', 'success');
         }
 
@@ -1927,6 +1932,28 @@
             }
         }
 
+        // CORRIGIDO: addTopico e removeTopico simplificados
+        function addTopico(btn, dia) {
+            const currentRow = btn.closest('.topico-row');
+            const newRow = document.createElement('div');
+            newRow.className = 'topico-row';
+            newRow.style.cssText = 'display:flex;gap:8px;margin-bottom:4px;align-items:center';
+            newRow.innerHTML = `
+                <input class="cronograma-editable cronograma-topico" type="text" placeholder="Descreva o tópico..." value="" data-dia="${dia}" data-color="">
+                <button type="button" class="btn-color-topico no-color" data-dia="${dia}" data-color="" style="background:#fff;border-style:dashed;" onclick="alternarCorTopico(this)" title="Sem cor"></button>
+                <button type="button" class="btn btn-sm btn-ghost cronograma-remove-topico" onclick="removeTopico(this)" style="padding:2px 8px;font-size:14px;line-height:1;color:var(--danger)">×</button>
+                <button type="button" class="btn btn-sm btn-ghost cronograma-add-topico" data-dia="${dia}" onclick="addTopico(this, ${dia})" style="padding:2px 8px;font-size:14px;line-height:1">+</button>
+            `;
+            currentRow.after(newRow);
+            newRow.querySelector('input').focus();
+        }
+
+        function removeTopico(btn) {
+            if (!confirm('Deseja realmente excluir este tópico do cronograma?')) return;
+            btn.closest('.topico-row').remove();
+        }
+
+        // CORRIGIDO: renderCronograma com botão de remover visível para linhas extras e sempre presente o botão +
         function renderCronograma() {
             const mesSel = document.getElementById('cronogramaMes');
             const anoSel = document.getElementById('cronogramaAno');
@@ -1985,20 +2012,21 @@
                 const topicos = (reg.topicos && reg.topicos.length) ? [...reg.topicos] : [{ t: '', c: null }];
                 let topicosHtml = '';
                 topicos.forEach((topico, idx) => {
-                    const isLast = idx === topicos.length - 1;
+                    const isFirst = (idx === 0);
                     const cor = topico.c || '';
                     const corHex = COLOR_HEX2[cor] || '';
                     const btnColorStyle = cor ? `background:${corHex};border-color:${corHex};` : 'background:#fff;border-style:dashed;';
                     const btnClass = cor ? '' : ' no-color';
                     const inputTopicStyle = cor ? `background:${COLOR_BG2[cor]};border-left:3px solid ${corHex};` : '';
-                    topicosHtml += `<div class="topico-row" style="display:flex;gap:8px;margin-bottom:4px;align-items:center">
-                        <input class="cronograma-editable cronograma-topico" type="text" placeholder="Descreva o tópico..." value="${esc(topico.t)}" data-dia="${dia}" data-index="${idx}" data-color="${cor}" ${disabledAttr} style="${inputTopicStyle}">
-                        <button type="button" class="btn-color-topico${btnClass}" data-dia="${dia}" data-index="${idx}" data-color="${cor}" style="${btnColorStyle}" onclick="alternarCorTopico(this)" title="${cor ? 'Cor: '+cor : 'Sem cor'}" ${disabledAttr}></button>
-                        ${isLast
-                            ? `<button type="button" class="btn btn-sm btn-ghost cronograma-add-topico" data-dia="${dia}" style="padding:2px 8px;font-size:14px;line-height:1" onclick="addTopico(this, ${dia})" ${disabledAttr}>+</button>`
-                            : `<button type="button" class="btn btn-sm btn-ghost cronograma-remove-topico" data-dia="${dia}" data-index="${idx}" style="padding:2px 8px;font-size:14px;line-height:1;color:var(--danger)" onclick="removeTopico(this, ${dia}, ${idx})" ${disabledAttr}>×</button>`
-                        }
-                    </div>`;
+                    topicosHtml += `
+                        <div class="topico-row" style="display:flex;gap:8px;margin-bottom:4px;align-items:center">
+                            <input class="cronograma-editable cronograma-topico" type="text" placeholder="Descreva o tópico..." value="${esc(topico.t)}" data-dia="${dia}" data-color="${cor}" ${disabledAttr} style="${inputTopicStyle}">
+                            <button type="button" class="btn-color-topico${btnClass}" data-dia="${dia}" data-color="${cor}" style="${btnColorStyle}" onclick="alternarCorTopico(this)" title="${cor ? 'Cor: '+cor : 'Sem cor'}" ${disabledAttr}></button>
+                            ${!isFirst ? `
+                            <button type="button" class="btn btn-sm btn-ghost cronograma-remove-topico" onclick="removeTopico(this)" style="padding:2px 8px;font-size:14px;line-height:1;color:var(--danger)" ${disabledAttr}>×</button>
+                            ` : ''}
+                            <button type="button" class="btn btn-sm btn-ghost cronograma-add-topico" data-dia="${dia}" onclick="addTopico(this, ${dia})" style="padding:2px 8px;font-size:14px;line-height:1" ${disabledAttr}>+</button>
+                        </div>`;
                 });
                 html += `<tr class="${isToday ? 'today-row' : ''}">
                     <td class="cronograma-dia">${String(dia).padStart(2,'0')} <span style="font-size:11px;color:var(--text-muted)">${diaSemana}</span></td>
@@ -2008,30 +2036,6 @@
                 </tr>`;
             }
             tbody.innerHTML = html;
-        }
-
-        function addTopico(btn, dia) {
-            const cell = btn.closest('.cronograma-topicos-cell');
-            const topicosDivs = cell.querySelectorAll('div[style*="display:flex"]');
-            const lastDiv = topicosDivs[topicosDivs.length - 1];
-            const addBtn = lastDiv.querySelector('.cronograma-add-topico');
-            if (addBtn) {
-                addBtn.outerHTML = `<button type="button" class="btn btn-sm btn-ghost cronograma-remove-topico" data-dia="${dia}" data-index="${topicosDivs.length-1}" style="padding:2px 8px;font-size:14px;line-height:1;color:var(--danger)" onclick="removeTopico(this, ${dia}, ${topicosDivs.length-1})">×</button>`;
-            }
-            const newIdx = topicosDivs.length;
-            const newDiv = document.createElement('div');
-            newDiv.className = 'topico-row';
-            newDiv.style.cssText = 'display:flex;gap:8px;margin-bottom:4px;align-items:center';
-            newDiv.innerHTML = `<input class="cronograma-editable cronograma-topico" type="text" placeholder="Descreva o tópico..." value="" data-dia="${dia}" data-index="${newIdx}" data-color="">
-                <button type="button" class="btn-color-topico no-color" data-dia="${dia}" data-index="${newIdx}" data-color="" style="background:#fff;border-style:dashed;" onclick="alternarCorTopico(this)" title="Sem cor"></button>
-                <button type="button" class="btn btn-sm btn-ghost cronograma-add-topico" data-dia="${dia}" style="padding:2px 8px;font-size:14px;line-height:1" onclick="addTopico(this, ${dia})">+</button>`;
-            cell.appendChild(newDiv);
-            newDiv.querySelector('input').focus();
-        }
-
-        function removeTopico(btn, dia, idx) {
-            const div = btn.closest('div');
-            div.remove();
         }
 
         function salvarCronograma() {
